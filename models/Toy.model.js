@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const toySchema = new Schema(
@@ -6,7 +6,9 @@ const toySchema = new Schema(
         name: String,
         photo: String,
         status: {
-            enum: ["new", "used", "trash"]
+            type: String,
+            enum: ["new", "used", "trash"],
+            default: "used"
         },
         comments: {
             type: mongoose.Schema.Types.ObjectId,
