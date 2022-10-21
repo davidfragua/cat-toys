@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
@@ -33,7 +33,9 @@ const userSchema = new Schema(
       ref: "Comment"
     },
     role: {
-      enum: ["admin","user" ]
+      type: String,
+      enum: ["admin","user" ],
+      default: "user"
     }
   },
   {
