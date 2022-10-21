@@ -4,6 +4,7 @@ const { Schema, model, mongoose } = require("mongoose");
 const toySchema = new Schema(
     {
         name: String,
+        description: String,
         photo: String,
         status: {
             type: String,
