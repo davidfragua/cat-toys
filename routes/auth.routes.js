@@ -103,7 +103,7 @@ router.post("/login", async (req, res, next) => {
     if (foundUser === null) {
       // si no existe
       res.render("auth/login.hbs", {
-        errorMessage: "Credenciales incorrectas",
+        errorMessage: "Credenciales incorrectas ",
       });
       return;
     }
@@ -125,7 +125,7 @@ router.post("/login", async (req, res, next) => {
     // el metodo es para asegurar que la sesion se ha creado correctamente antes de continuar
     req.session.save(() => {
       // 4. redireccionar a una pagina privada
-      res.redirect("/profile");
+      res.redirect("/user/profile");
     });
   } catch (error) {
     next(error);

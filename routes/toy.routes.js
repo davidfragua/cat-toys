@@ -31,9 +31,15 @@ try {
 }
 })
 
-//!GET "/toy/add" =>  renderiza el form para añadir toy
 
-
-//!POST "/toy/add" =>  recoge la info del form add toy
+//POST "/toy/add" =>  recoge la info del form add toy
+router.post("/add", async (req, res, next)=>{
+    try {
+        const newToy = await Toy.create(req.body)
+        res.redirect("/user/profile")
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports=router
