@@ -15,4 +15,7 @@ router.use("/toy", toyRoutes)
 const authRoutes = require("./auth.routes")
 router.use("/auth", authRoutes)
 
+const commentRoutes = require("./comment.routes")
+router.use("/comment", commentRoutes)
+
 module.exports = router;

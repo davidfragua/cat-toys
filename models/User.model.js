@@ -28,10 +28,10 @@ const userSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Toy"
     },
-    comment: {
-      type: String,
+    comment: [{
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
-    },
+    }],
     role: {
       type: String,
       enum: ["admin","user" ],

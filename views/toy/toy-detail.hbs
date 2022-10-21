@@ -5,7 +5,20 @@
 <p>{{description}}</p>
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
-{{!-- {{this.comments}} --}}
+{{#each comment}}
+<p>Comments:</p>
+<p>{{content}}</p>
+{{/each}}
+
 {{/with}}
+
+<form action="/toy/{{eachToy._id}}/detail" method="POST">
+
+<label for="content">Comentario:</label>
+<br>
+<textarea rows="4" cols="50"  name="content"></textarea>
+<br>
+<button>Enviar comentario</button>
+</form>
 
 </div>

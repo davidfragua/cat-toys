@@ -11,10 +11,10 @@ const toySchema = new Schema(
             enum: ["new", "used", "trash"],
             default: "used"
         },
-        comments: {
+        comment: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
-        }
+          }]
         
     },
     {
