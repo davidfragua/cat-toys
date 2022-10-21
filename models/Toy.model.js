@@ -6,7 +6,9 @@ const toySchema = new Schema(
         name: String,
         photo: String,
         status: {
-            enum: ["new", "used", "trash"]
+            type: String,
+            enum: ["new", "used", "trash"],
+            default: "used"
         },
         comments: {
             type: mongoose.Schema.Types.ObjectId,
