@@ -1,5 +1,6 @@
 const express = require('express');
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { isLoggedIn } = require('../middlewares/auth.middleware');
 const router = express.Router();
 const Toy = require("../models/Toy.model")
 

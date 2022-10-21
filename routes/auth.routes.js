@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.model.js");
+const { isLoggedIn } = require("../middlewares/auth.middleware.js");
 
 //GET "/auth/signup" => renderiza el form para recoger los datos del nuevo usuario
 router.get("/signup", (req, res, next) => {
@@ -89,7 +90,7 @@ router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body);
 
-  // 1. validaciónes de backend
+  // 1. validaciones de backend
   if (email === "" || password === "") {
     res.render("auth/login.hbs", {
       errorMessage: "Los campos deben estar completos",
@@ -118,13 +119,13 @@ router.post("/login", async (req, res, next) => {
       return;
     }
 
-    // 3. Implementar un sistema de sesions y abrir una sesion para este usuario
+    // 3. Implementar un sistema de sesions y abrir una sesión para este usuario
 
     req.session.activeUser = foundUser; // ESTA ES LA LINEA CREA CREA LA SESSION/COOKIE
 
-    // el metodo es para asegurar que la sesion se ha creado correctamente antes de continuar
+    // el método es para asegurar que la sesión se ha creado correctamente antes de continuar
     req.session.save(() => {
-      // 4. redireccionar a una pagina privada
+      // 4. redireccionar a una página privada
       res.redirect("/user/profile");
     });
   } catch (error) {
@@ -132,8 +133,8 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-//GET "/auth/logout" => cerrar sesion
-router.get("/logout", (req, res, next) => {
+//GET "/auth/logout" => cerrar sesión
+router.get("/logout", isLoggedIn, (req, res, next) => {
   req.session.destroy(() => {
     res.redirect("/");
   });
