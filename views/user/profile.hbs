@@ -6,10 +6,23 @@
   </h3>
 
 <div>
-  <h4>Comentarios hechos por {{userFound.username}} :</h4>
-  
+  <h4>Toys offered by {{userFound.username}} :</h4>
+  {{#each userFound.toyOffered}}
+    <p>Toy:</p>
+    <p>{{this.name}}</p>
+  {{/each}}
 
 </div>
+
+<div>
+  <h4>Comments by {{userFound.username}} :</h4>
+  {{#each userFound.commentUser}}
+    <p>Comment for <b>{{this.idToy.name}}</b>:</p>
+    <p>{{this.content}}</p>
+  {{/each}}
+
+</div>
+
 </div>
 
 

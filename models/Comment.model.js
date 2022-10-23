@@ -1,9 +1,17 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const commentSchema = new Schema(
     {
         content: String,
+        idToy:{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Toy"
+        },
+        idUser:{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+        }
         
         
     },
