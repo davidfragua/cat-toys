@@ -20,23 +20,27 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    toyOffered: {
+    toyOffered: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Toy"
-    },
+    }],
     toyReserved: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Toy"
     },
-    comment: [{
+    commentUser: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
     }],
     role: {
       type: String,
-      enum: ["admin","user" ],
+      enum: ["admin", "user"],
       default: "user"
-    }
+    },
+    avatar:{
+      type:String
+    } 
+    
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

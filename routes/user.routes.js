@@ -7,8 +7,9 @@ const User= require("../models/User.model.js")
 //GET "/user/profile" => renderiza el area personal del user
 router.get("/profile", isLoggedIn, async (req, res, next)=>{
     try {
-        console.log("ACTICVE USER",req.session.activeUser)
-        const userFound = await User.findById(req.session.activeUser._id)
+        //console.log("ACTICVE USER",req.session.activeUser)
+        const userFound = await User.findById(req.session.activeUser._id).populate("commentUser")
+        
         res.render("user/profile.hbs", {
             userFound
         })

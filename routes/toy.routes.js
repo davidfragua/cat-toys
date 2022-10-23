@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const { isLoggedIn } = require('../middlewares/auth.middleware');
 const router = express.Router();
 const Toy = require("../models/Toy.model")
-const Comment = require("../models/Comment.model")
+const Comment = require("../models/Comment.model");
+const User = require('../models/User.model');
 
 //GET "/toy/list" => renderiza una lista de todos los toy
 router.get("/list", async (req, res, next) =>{
@@ -23,7 +24,7 @@ try {
 router.get("/:idtoy/detail", async (req, res, next) =>{
     const { idtoy } = req.params
 try {
-    const eachToy = await Toy.findById(idtoy).populate("comment")
+    const eachToy = await Toy.findById(idtoy).populate("commentToy")
     res.render("toy/toy-detail.hbs", {
         eachToy
     })
@@ -40,24 +41,35 @@ router.post("/:idtoy/detail", async (req, res, next) => {
        
     try {
     const updateToy = await Toy.findById(idtoy)
-    
+    const updateUser = await User.findById(req.session.activeUser._id)
     const newComment = await Comment.create(req.body)
 
-    const { name, description, photo, status, comment  } = updateToy
-    comment.push(newComment._id)
-        console.log(updateToy, "updateToy" )
-        console.log(comment, "comment" )
-        console.log(req.body, "req.body" )
+    const { name, description, photo, status, commentToy  } = updateToy
+    const {username, email, password, toyOffered, toyReserved, commentUser, role, avatar} = updateUser
+    commentToy.push(newComment._id)
+    commentUser.push(newComment._id)
 
     const newToy = {
         name: name,
         description: description,
         photo: photo,
         status: status,
-        comment: comment
+        commentToy: commentToy,
+        avatar: avatar
+    }
+
+    const newUser = {
+        username: username,
+        email:email,
+        password: password,
+        toyOffered: toyOffered, 
+        toyReserved: toyReserved, 
+        commentUser: commentUser, 
+        role:role
     }
 
      const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, newToy) 
+     const userToUpdate = await User.findbyIdAndUpdate(req.session.activeUser._id, newUser)
         
       res.redirect(`/toy/${idtoy}/detail`)
 
