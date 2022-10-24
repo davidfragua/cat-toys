@@ -22,10 +22,12 @@ router.get("/list", async (req, res, next) => {
 router.get("/:idtoy/detail", async (req, res, next) => {
   const { idtoy } = req.params;
   try {
-    const eachToy = await Toy.findById(idtoy).populate("commentToy").populate({path : 'commentToy', populate : {path : 'idUser' } })
+    const eachToy = await Toy.findById(idtoy)
+      .populate("commentToy")
+      .populate({ path: "commentToy", populate: { path: "idUser" } });
     res.render("toy/toy-detail.hbs", {
       eachToy,
-      activeUser : req.session.activeUser
+      activeUser: req.session.activeUser,
     });
   } catch (error) {
     next(error);
@@ -39,28 +41,28 @@ router.post("/:idtoy/detail", async (req, res, next) => {
   try {
     const updateToy = await Toy.findById(idtoy);
     const updateUser = await User.findById(req.session.activeUser._id);
-    
+
     const { name, description, photo, status, commentToy } = updateToy;
     const {
-        username,
-        email,
-        password,
-        toyOffered,
+      username,
+      email,
+      password,
+      toyOffered,
       toyReserved,
       commentUser,
       role,
       avatar,
     } = updateUser;
-    
+
     const newToy = {
       name: name,
-        description: description,
-        photo: photo,
-        status: status,
+      description: description,
+      photo: photo,
+      status: status,
       commentToy: commentToy,
-      avatar: avatar,
+      
     };
-    
+
     const newUser = {
       username: username,
       email: email,
@@ -70,23 +72,23 @@ router.post("/:idtoy/detail", async (req, res, next) => {
       commentUser: commentUser,
       role: role,
     };
-    
+
     const newComment = {
-        content: req.body.content,
-        idUser: req.session.activeUser._id,
-        idToy: idtoy,
-      };
-      
-      const oneNewComment = await Comment.create(newComment);
+      content: req.body.content,
+      idUser: req.session.activeUser._id,
+      idToy: idtoy,
+    };
 
-      commentToy.push(oneNewComment._id);
-      commentUser.push(oneNewComment._id);
+    const oneNewComment = await Comment.create(newComment);
 
-      const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, newToy);
-      
-      const userToUpdate = await User.findByIdAndUpdate(
-        req.session.activeUser._id,
-        newUser
+    commentToy.push(oneNewComment._id);
+    commentUser.push(oneNewComment._id);
+
+    const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, newToy);
+
+    const userToUpdate = await User.findByIdAndUpdate(
+      req.session.activeUser._id,
+      newUser
     );
 
     res.redirect(`/toy/${idtoy}/detail`);
@@ -131,8 +133,8 @@ router.post("/add", async (req, res, next) => {
 });
 
 //GET ("/toy/reserve") => ñade el toy a la reserva del user
-router.get("/:idtoy/reserve", async (req, res, next)=> {
-  const{idtoy}= req.params
+router.get("/:idtoy/reserve", async (req, res, next) => {
+  const { idtoy } = req.params;
   try {
     const oldUser = await User.findById(req.session.activeUser._id);
     let {
@@ -146,25 +148,68 @@ router.get("/:idtoy/reserve", async (req, res, next)=> {
       avatar,
     } = oldUser;
 
-    toyReserved= idtoy
+    toyReserved = idtoy;
 
-    const updateUser={
-      username:username,
-      email:email,
-      password:password,
-      toyOffered:toyOffered,
+    const updateUser = {
+      username: username,
+      email: email,
+      password: password,
+      toyOffered: toyOffered,
       toyReserved: toyReserved,
       commentUser: commentUser,
-      role:role,
+      role: role,
       avatar: avatar,
-    }
+    };
 
-    const newUser = await User.findByIdAndUpdate(req.session.activeUser._id, updateUser)
-    res.redirect(`/toy/${idtoy}/detail`)
+    const newUser = await User.findByIdAndUpdate(
+      req.session.activeUser._id,
+      updateUser
+    );
+    res.redirect(`/toy/${idtoy}/detail`);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+//GET ("/toy/:idtoy/edit")
+router.get("/:idtoy/edit",  async (req, res, next)=>{
+  const {idtoy}= req.params
+  try {
+    const oldToy = await Toy.findById(idtoy)
+    res.render("toy/edit.hbs", {
+      oldToy
+    })
     
   } catch (error) {
     next(error)
   }
+})
+
+//POST ("/toy/:idtoy/edit")
+router.post("/:idtoy/edit", async (req, res, next)=>{
+  const{idtoy}=req.params
+try {
+  
+
+  const { name, description, photo, status, commentToy } = req.body;
+
+
+
+  const newToy = {
+    name: name,
+    description: description,
+    photo: photo,
+    status: status,
+    commentToy: commentToy,
+    
+  };
+
+  const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy)
+  res.redirect(`/user/profile`)
+} catch (error) {
+  next(error)
+}
 })
 
 module.exports = router;
