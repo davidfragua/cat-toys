@@ -1,22 +1,22 @@
 <div>
 
-  <h3>Formulario de Registro</h3>
+  <h3>Register Form</h3>
 
   <form action="/auth/signup" method="POST">
 
-    <label for="username">Nombre de Usuario:</label>
+    <label for="username">Username:</label>
     <input type="text" name="username">
     <br>
-    <label for="email">Correo Electronico:</label>
+    <label for="email">Email:</label>
     <input type="text" name="email">
     <br>
-    <label for="password">Contraseña:</label>
+    <label for="password">Password:</label>
     <input type="password" name="password">
     <br>
 
     <p style="color: red">{{errorMessage}}</p>
 
-    <button>Registrarme</button>
+    <button>Register</button>
 
   </form>
 

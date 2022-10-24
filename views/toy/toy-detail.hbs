@@ -6,7 +6,7 @@
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
 {{#each commentToy}}
-<p>Comment wrote by <b>{{idUser.username}}</b></p>
+<p>Comment written by <b>{{idUser.username}}</b></p>
 <p>{{content}}</p>
 {{#if ../../isUserAdmin}} 
 <a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete</button></a>
@@ -19,11 +19,11 @@
 
 <form action="/toy/{{eachToy._id}}/detail" method="POST">
 
-<label for="content">Comentario:</label>
+<label for="content">Comment:</label>
 <br>
 <textarea rows="4" cols="50"  name="content"></textarea>
 <br>
-<button>Enviar comentario</button>
+<button>Send comment</button>
 </form>
 
 </div>
