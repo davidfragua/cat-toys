@@ -2,9 +2,16 @@
 
 <h3>User Data</h3>
 
-<p>Name: {{userDetails.username}}</p>
+<p>Name: {{userDetail.username}}</p>
 
+<div>
+  <h4>Toys offered by {{userDetail.username}} :</h4>
+  {{#each userDetail.toyOffered}}
+    <p>Toy:</p>
+    <p>{{this.name}}</p>
+  {{/each}}
 
+</div>
 
 
 

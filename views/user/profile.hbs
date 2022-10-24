@@ -19,6 +19,7 @@
   {{#each userFound.commentUser}}
     <p>Comment for <b>{{this.idToy.name}}</b>:</p>
     <p>{{this.content}}</p>
+    <a href="/comment/{{this._id}}/edit"><button>Edit Comment</button></a>
   {{/each}}
 
 </div>

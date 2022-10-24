@@ -130,4 +130,41 @@ router.post("/add", async (req, res, next) => {
   }
 });
 
+//GET ("/toy/reserve") => ñade el toy a la reserva del user
+router.get("/:idtoy/reserve", async (req, res, next)=> {
+  const{idtoy}= req.params
+  try {
+    const oldUser = await User.findById(req.session.activeUser._id);
+    let {
+      username,
+      email,
+      password,
+      toyOffered,
+      toyReserved,
+      commentUser,
+      role,
+      avatar,
+    } = oldUser;
+
+    toyReserved= idtoy
+
+    const updateUser={
+      username:username,
+      email:email,
+      password:password,
+      toyOffered:toyOffered,
+      toyReserved: toyReserved,
+      commentUser: commentUser,
+      role:role,
+      avatar: avatar,
+    }
+
+    const newUser = await User.findByIdAndUpdate(req.session.activeUser._id, updateUser)
+    res.redirect(`/toy/${idtoy}/detail`)
+    
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router;

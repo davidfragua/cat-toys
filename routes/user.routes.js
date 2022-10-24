@@ -39,9 +39,10 @@ router.get("/list", isLoggedIn, async (req, res, next) => {
 router.get("/:userid/detail", isLoggedIn, async (req, res, next) => {
   const { userid } = req.params;
   try {
-    const userDetail = await User.findById(userid);
-    res.render("user/detail.hbs", {
-      userDetail,
+    const userDetail = await User.findById(userid).populate("toyOffered");
+    console.log("USERDETAIL", userDetail)
+     res.render("user/detail.hbs", {
+      userDetail: userDetail,
     });
   } catch (error) {
     next(error);
