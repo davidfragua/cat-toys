@@ -24,6 +24,28 @@ const projectName = "cat-toys";
 
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
+// aqui ejecutaremos el middleware de variables locales para CADA ruta que intente acceder el cliente
+app.use((req, res, next) => {
+    // el middle crea una variable para HBS que nos ayuda a saber si el usuario esta logeado o no
+    if (req.session.activeUser !== undefined) {
+      // el usuario no está activo
+      res.locals.isUserActive = true
+      if (req.session.activeUser.role === "admin") {
+        // el usuario es admin
+        res.locals.isUserAdmin = true
+      }
+      if (req.session.activeUser.role === "user") {
+        // el usuario no es admin
+        res.locals.isUserAdmin = false
+      }
+    } else {
+      // el usuario no está activo y no es admin
+      res.locals.isUserActive = false
+      res.locals.isUserAdmin = false
+    }
+    next()
+  })
+
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);

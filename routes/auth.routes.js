@@ -122,7 +122,7 @@ router.post("/login", async (req, res, next) => {
     // 3. Implementar un sistema de sesions y abrir una sesión para este usuario
 
     req.session.activeUser = foundUser; // ESTA ES LA LINEA CREA CREA LA SESSION/COOKIE
-
+    console.log(req.session.activeUser);
     // el método es para asegurar que la sesión se ha creado correctamente antes de continuar
     req.session.save(() => {
       // 4. redireccionar a una página privada

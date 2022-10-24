@@ -16,11 +16,11 @@
    <a href="/auth/signup">Registrarse</a>
    <a href="/auth/login">Acceder</a>
    <a href="/toy/list">Toy List</a>
-   <a href="/auth/logout">Log Out</a>
-   {{!-- {{#if isUserActive}} --}}
+   {{#if isUserActive}}
       <a href="/user/profile">Ver Perfil</a>
+      <a href="/user/{{req.session.activeUser._id}}/edit">Editar Perfil</a>
       <a href="/auth/logout">Cerrar sesion</a>
-   {{!-- {{/if}} --}}
+   {{/if}}
    <a href="/user/list">Users List</a>
 
 </nav>

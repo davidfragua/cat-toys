@@ -45,7 +45,7 @@ module.exports = (app) => {
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/basic-auth"
+      mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/cat-toys"
     })
   }));
 };

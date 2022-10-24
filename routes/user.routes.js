@@ -23,10 +23,12 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
 //GET "/user/list" => renderiza una lista de todos los user
 router.get("/list", isLoggedIn, async (req, res, next) => {
   //TODO imagenes usuario
+  console.log("ISADMIN!!!!",res.locals.isUserAdmin)
   try {
     const userList = await User.find();
     res.render("user/list.hbs", {
       userList,
+      isUserAdmin: res.locals.isUserAdmin
     });
   } catch (error) {
     next(error);
@@ -44,5 +46,23 @@ router.get("/:userid/detail", isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+
+
+// GET ("/user/:userid/edit") => renderiza form editar datos user
+router.get("/:userid/edit", isLoggedIn, async (req, res, next) => {
+  const {userid} = req.params
+  try {
+    const foundUser = await User.findById(userid) 
+    res.render("user/edit.hbs" , {
+      activeUser:  foundUser
+    })
+  } catch (error) {
+    
+  }
+
+})
+
+
+
 
 module.exports = router;
