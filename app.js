@@ -28,8 +28,9 @@ app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 app.use((req, res, next) => {
     // el middle crea una variable para HBS que nos ayuda a saber si el usuario esta logeado o no
     if (req.session.activeUser !== undefined) {
-      // el usuario no está activo
+      // el usuario está activo
       res.locals.isUserActive = true
+      res.locals.localIduser = req.session.activeUser._id
       if (req.session.activeUser.role === "admin") {
         // el usuario es admin
         res.locals.isUserAdmin = true

@@ -25,6 +25,7 @@ router.get("/:idtoy/detail", async (req, res, next) => {
     const eachToy = await Toy.findById(idtoy).populate("commentToy").populate({path : 'commentToy', populate : {path : 'idUser' } })
     res.render("toy/toy-detail.hbs", {
       eachToy,
+      activeUser : req.session.activeUser
     });
   } catch (error) {
     next(error);

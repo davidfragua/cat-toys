@@ -18,7 +18,7 @@
    <a href="/toy/list">Toy List</a>
    {{#if isUserActive}}
       <a href="/user/profile">Ver Perfil</a>
-      <a href="/user/{{req.session.activeUser._id}}/edit">Editar Perfil</a>
+      <a href="/user/{{localIduser}}/edit">Editar Perfil</a>
       <a href="/auth/logout">Cerrar sesion</a>
    {{/if}}
    <a href="/user/list">Users List</a>

@@ -8,6 +8,11 @@
 {{#each commentToy}}
 <p>Comment wrote by <b>{{idUser.username}}</b></p>
 <p>{{content}}</p>
+{{#if ../../isUserAdmin}} 
+<a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete</button></a>
+{{/if}}
+
+
 {{/each}}
 
 {{/with}}
