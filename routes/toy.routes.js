@@ -60,7 +60,6 @@ router.post("/:idtoy/detail", async (req, res, next) => {
       photo: photo,
       status: status,
       commentToy: commentToy,
-      
     };
 
     const newUser = {
@@ -171,45 +170,49 @@ router.get("/:idtoy/reserve", async (req, res, next) => {
   }
 });
 
-
 //GET ("/toy/:idtoy/edit")
-router.get("/:idtoy/edit",  async (req, res, next)=>{
-  const {idtoy}= req.params
+router.get("/:idtoy/edit", async (req, res, next) => {
+  const { idtoy } = req.params;
   try {
-    const oldToy = await Toy.findById(idtoy)
+    const oldToy = await Toy.findById(idtoy);
     res.render("toy/edit.hbs", {
-      oldToy
-    })
-    
+      oldToy,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 //POST ("/toy/:idtoy/edit")
-router.post("/:idtoy/edit", async (req, res, next)=>{
-  const{idtoy}=req.params
-try {
-  
+router.post("/:idtoy/edit", async (req, res, next) => {
+  const { idtoy } = req.params;
+  try {
+    const { name, description, photo, status, commentToy } = req.body;
 
-  const { name, description, photo, status, commentToy } = req.body;
+    const newToy = {
+      name: name,
+      description: description,
+      photo: photo,
+      status: status,
+      commentToy: commentToy,
+    };
 
+    const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy);
+    res.redirect(`/user/profile`);
+  } catch (error) {
+    next(error);
+  }
+});
 
-
-  const newToy = {
-    name: name,
-    description: description,
-    photo: photo,
-    status: status,
-    commentToy: commentToy,
-    
-  };
-
-  const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy)
-  res.redirect(`/user/profile`)
-} catch (error) {
-  next(error)
-}
-})
+//GET ("/toy/:idtoy/delete")
+router.get("/:idtoy/delete", async (req, res, next) => {
+  const { idtoy } = req.params;
+  try {
+    const deletedToy = await Toy.findByIdAndDelete(idtoy);
+    res.redirect("/toy/list");
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

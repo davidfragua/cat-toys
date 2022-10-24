@@ -7,7 +7,9 @@
 <li> 
 <a href="/toy/{{_id}}/detail">{{name}}</a>
 </li>
-
+{{#if ../isUserAdmin}}
+   <a href="/toy/{{_id}}/delete"><button>Delete Toy</button></a>
+    {{/if}}
 <img src="{{photo}}" alt="{{name}}" width="100px">
 {{/each}}
 

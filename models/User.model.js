@@ -7,44 +7,47 @@ const userSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
-    toyOffered: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Toy"
-    }],
+    toyOffered: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Toy",
+      },
+    ],
     toyReserved: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Toy"
+      ref: "Toy",
     },
-    commentUser: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-    }],
+    commentUser: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     role: {
       type: String,
       enum: ["admin", "user"],
-      default: "user"
+      default: "user",
     },
-    avatar:{
-      type:String
-    } 
-    
+    avatar: {
+      type: String,
+    },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
-    timestamps: true
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
   }
 );
 

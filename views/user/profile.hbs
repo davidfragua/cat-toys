@@ -1,53 +1,50 @@
 <div>
-<div>
-  <h3>
-    Personal Page of
-    {{userFound.username}}
-  </h3>
+  <div>
+    <h3>
+      Personal Page of
+      {{userFound.username}}
+    </h3>
 
-<div>
-  <h4>Toys offered by {{userFound.username}} :</h4>
-  {{#each userFound.toyOffered}}
-    <p>Toy:</p>
-    <p>{{this.name}}</p>
-    <a href="/toy/{{this._id}}/edit"><button>Change it</button></a>
-  {{/each}}
+    <div>
+      <h4>Toys offered by {{userFound.username}} :</h4>
+      {{#each userFound.toyOffered}}
+        <p>Toy:</p>
+        <p>{{this.name}}</p>
+        <a href="/toy/{{this._id}}/edit"><button>Change it</button></a>
+      {{/each}}
 
-</div>
+    </div>
 
-<div>
-  <h4>Comments by {{userFound.username}} :</h4>
-  {{#each userFound.commentUser}}
-    <p>Comment for <b>{{this.idToy.name}}</b>:</p>
-    <p>{{this.content}}</p>
-    <a href="/comment/{{this._id}}/edit"><button>Edit Comment</button></a>
-  {{/each}}
+    <div>
+      <h4>Comments by {{userFound.username}} :</h4>
+      {{#each userFound.commentUser}}
+        <p>Comment for <b>{{this.idToy.name}}</b>:</p>
+        <p>{{this.content}}</p>
+        <a href="/comment/{{this._id}}/edit"><button>Edit Comment</button></a>
+      {{/each}}
 
-</div>
+    </div>
 
-</div>
-
-
+  </div>
 
   <div>
 
-  <form action="/toy/add" method="POST">
-    <label for="name">Nombre:</label>
-    <input type="text" name="name" />
-    <br />
-    <label for="photo">Photo:</label>
-    <input type="text" name="photo" />
-    <br />
-    <label for="status">Status:</label>
-    <select name="status">
+    <form action="/toy/add" method="POST">
+      <label for="name">Nombre:</label>
+      <input type="text" name="name" />
+      <br />
+      <label for="photo">Photo:</label>
+      <input type="text" name="photo" />
+      <br />
+      <label for="status">Status:</label>
+      <select name="status">
         <option value="new">New</option>
         <option value="used">Used</option>
         <option value="trash">Trash</option>
-    </select>
-    <br />
-  <button>Add Toy</button>
-  </form>
+      </select>
+      <br />
+      <button>Add Toy</button>
+    </form>
   </div>
-
 
 </div>

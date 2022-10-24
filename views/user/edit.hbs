@@ -1,20 +1,20 @@
 <div>
 
-<h3>Editar los datos</h3>
+  <h3>Editar los datos</h3>
 
-<form action="/user/{{activeUser._id}}/edit" method="POST">
+  <form action="/user/{{activeUser._id}}/edit" method="POST">
 
     <label for="username">Username:</label>
-    <input type="text" name="username" value="{{activeUser.username}}">
-    <br>
+    <input type="text" name="username" value="{{activeUser.username}}" />
+    <br />
     <label for="">Avatar</label>
-    <br>
+    <br />
     <label for="email">Email:</label>
-    <input type="text" name="email" value="{{activeUser.email}}">
-    <br>
+    <input type="text" name="email" value="{{activeUser.email}}" />
+    <br />
     <label for="password">Password:</label>
-    <input type="password" name="password">
-    <br>
+    <input type="password" name="password" />
+    <br />
 
     <p style="color: red">{{errorMessage}}</p>
 

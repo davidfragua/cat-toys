@@ -1,21 +1,21 @@
 <div>
-    <form action="/toy/{{oldToy._id}}/edit" method="POST">
+  <form action="/toy/{{oldToy._id}}/edit" method="POST">
     <label for="name">Nombre:</label>
-    <input type="text" name="name" value="{{oldToy.name}}"/>
+    <input type="text" name="name" value="{{oldToy.name}}" />
     <br />
-<label for="description">Description:</label>
-    <input type="text" name="description" value="{{oldToy.description}}"/>
-    <br>
+    <label for="description">Description:</label>
+    <input type="text" name="description" value="{{oldToy.description}}" />
+    <br />
     <label for="photo">Photo:</label>
-    <input type="text" name="photo" value="{{oldToy.photo}}"/>
+    <input type="text" name="photo" value="{{oldToy.photo}}" />
     <br />
     <label for="status">Status:</label>
     <select name="status">
-        <option value="new">New</option>
-        <option value="used">Used</option>
-        <option value="trash">Trash</option>
+      <option value="new">New</option>
+      <option value="used">Used</option>
+      <option value="trash">Trash</option>
     </select>
     <br />
-  <button>Comfirm changes</button>
+    <button>Comfirm changes</button>
   </form>
 </div>
