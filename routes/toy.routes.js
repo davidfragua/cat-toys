@@ -187,6 +187,7 @@ router.get("/:idtoy/edit", async (req, res, next) => {
   const { idtoy } = req.params;
   try {
     const oldToy = await Toy.findById(idtoy);
+   
     res.render("toy/edit.hbs", {
       oldToy,
     });

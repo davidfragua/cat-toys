@@ -5,7 +5,9 @@
 <p>{{description}}</p>
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
+{{#if isUserActive}}
 <a href="/toy/{{_id}}/reserve"><button>Reserve it</button></a>
+{{/if}}
 
 {{#each commentToy}}
 <p>Comment written by <b>{{idUser.username}}</b></p>
@@ -19,6 +21,7 @@
 
 {{/with}}
 
+{{#if isUserActive}}
 <form action="/toy/{{eachToy._id}}/detail" method="POST">
 
 <label for="content">Comment:</label>
@@ -27,5 +30,5 @@
 <br>
 <button>Send comment</button>
 </form>
-
+{{/if}}
 </div>

@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
+  margin: 7vh 10vw;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
 }
 
 a {
@@ -9,4 +10,14 @@ a {
 
 h1 {
   color: 15px;
+}
+
+.navbar{
+  display: flex;
+  justify-content: right;  
+  position: fixed;
+  width:100%;
+  top:0;
+  left: 0;
+
 }

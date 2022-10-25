@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.2",
     "cloudinary": "^1.32.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
