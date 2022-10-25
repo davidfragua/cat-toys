@@ -19,5 +19,8 @@ h1 {
   width:100%;
   top:0;
   left: 0;
+  background-color: white;
+  padding-right: 4vw;
+  padding-top: 2vh;
 
 }

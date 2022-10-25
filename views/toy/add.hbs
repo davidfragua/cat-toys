@@ -1,0 +1,19 @@
+<div>
+
+    <form action="/toy/add" method="POST" enctype="multipart/form-data">
+      <label for="name">Nombre:</label>
+      <input type="text" name="name" />
+      <br />
+      <label for="photo">Photo:</label>
+      <input type="file" name="photo" />
+      <br />
+      <label for="status">Status:</label>
+      <select name="status">
+        <option value="new">New</option>
+        <option value="used">Used</option>
+        <option value="trash">Trash</option>
+      </select>
+      <br />
+      <button>Add Toy</button>
+    </form>
+  </div>

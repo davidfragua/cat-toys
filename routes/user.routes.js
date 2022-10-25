@@ -12,6 +12,7 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
     //console.log("ACTICVE USER",req.session.activeUser)
     const userFound = await User.findById(req.session.activeUser._id)
       .populate("toyOffered")
+      .populate("toyReserved")
       .populate("commentUser")
       .populate({
         path: "commentUser",
