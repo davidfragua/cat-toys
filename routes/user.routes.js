@@ -4,6 +4,7 @@ const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware.js");
 const router = express.Router();
 const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
+const uploader = require("../middlewares/cloudinary.js")
 
 //GET "/user/profile" => renderiza el area personal del user
 router.get("/profile", isLoggedIn, async (req, res, next) => {
@@ -67,7 +68,7 @@ router.get("/:userid/edit", isLoggedIn, async (req, res, next) => {
 });
 
 //POST ("/user/:userid/edit")
-router.post("/:userid/edit", isLoggedIn, async (req, res, next) => {
+router.post("/:userid/edit", isLoggedIn, uploader.single("avatar"), async (req, res, next) => {
   const { userid } = req.params;
 
   try {
@@ -101,7 +102,7 @@ router.post("/:userid/edit", isLoggedIn, async (req, res, next) => {
 
     const updateUser = {
       username: req.body.username,
-      avatar: req.body.avatar,
+      avatar: req.file.path,
       email: req.body.email,
       password: hashPassword,
       toyOffered: oldUser.toyOffered,

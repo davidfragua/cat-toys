@@ -2,10 +2,12 @@
     <h3>Users List</h3>
     <ul>
     {{#each userList}}
-<li><a href="/user/{{_id}}/detail">{{username}}</a></li>
+<li><a href="/user/{{_id}}/detail"><img src="{{avatar}}" alt="{{username}}" width="25px"> {{username}}</a></li>
+
+
     {{#if ../isUserAdmin}}
     <a href="/user/{{_id}}/edit"><button>Edit User Data</button></a>
-   <a href="/user/{{_id}}/delete"><button>Delete User</button></a>
+    <a href="/user/{{_id}}/delete"><button>Delete User</button></a>
     {{/if}}
     {{/each}}
     </ul>

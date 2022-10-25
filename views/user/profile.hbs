@@ -4,13 +4,15 @@
       Personal Page of
       {{userFound.username}}
     </h3>
-
+    <p>Avatar:</p>
+    <img src="{{userFound.avatar}}" alt="Avatar">
     <div>
       <h4>Toys offered by {{userFound.username}} :</h4>
       {{#each userFound.toyOffered}}
         <p>Toy:</p>
         <p>{{this.name}}</p>
-        <a href="/toy/{{this._id}}/edit"><button>Change it</button></a>
+        <img src="{{this.photo}}" alt="{{this.name}}">
+        <a href="/toy/{{this._id}}/edit"><button>Edit Toy</button></a>
       {{/each}}
 
     </div>
@@ -29,12 +31,12 @@
 
   <div>
 
-    <form action="/toy/add" method="POST">
+    <form action="/toy/add" method="POST" enctype="multipart/form-data">
       <label for="name">Nombre:</label>
       <input type="text" name="name" />
       <br />
       <label for="photo">Photo:</label>
-      <input type="text" name="photo" />
+      <input type="file" name="photo" />
       <br />
       <label for="status">Status:</label>
       <select name="status">

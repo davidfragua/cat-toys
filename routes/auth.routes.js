@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.model.js");
 const { isLoggedIn } = require("../middlewares/auth.middleware.js");
+const uploader = require("../middlewares/cloudinary.js")
 
 //GET "/auth/signup" => renderiza el form para recoger los datos del nuevo usuario
 router.get("/signup", (req, res, next) => {
@@ -10,10 +11,10 @@ router.get("/signup", (req, res, next) => {
 });
 
 //POST "/auth/signup" => recoge a info del form de nuevo user
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   // aqui recibiremos la info del formulario
 
-  const { username, email, password } = req.body;
+  const { username, email, password, avatar } = req.body;
   console.log(req.body);
 
   // 1. Validaciones de backend
@@ -68,6 +69,7 @@ router.post("/signup", async (req, res, next) => {
     // 3. Crear el perfil del usuario
     const newUser = {
       username: username,
+      avatar: req.file.path,
       email: email,
       password: hashPassword,
     };

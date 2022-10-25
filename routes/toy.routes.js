@@ -5,6 +5,7 @@ const router = express.Router();
 const Toy = require("../models/Toy.model");
 const Comment = require("../models/Comment.model");
 const User = require("../models/User.model");
+const uploader = require("../middlewares/cloudinary.js")
 
 //GET "/toy/list" => renderiza una lista de todos los toy
 router.get("/list", async (req, res, next) => {
@@ -34,8 +35,8 @@ router.get("/:idtoy/detail", async (req, res, next) => {
   }
 });
 
-//POST "/toy/:idtoy/detail" => Crear nuevo comentario y añadir relacion al toy y al user
-router.post("/:idtoy/detail", async (req, res, next) => {
+//POST "/toy/:idtoy/detail" => Crear nuevo comentario y añadir relación al toy y al user
+router.post("/:idtoy/detail",  async (req, res, next) => {
   const { idtoy } = req.params;
 
   try {
@@ -70,6 +71,7 @@ router.post("/:idtoy/detail", async (req, res, next) => {
       toyReserved: toyReserved,
       commentUser: commentUser,
       role: role,
+      avatar: avatar
     };
 
     const newComment = {
@@ -97,9 +99,18 @@ router.post("/:idtoy/detail", async (req, res, next) => {
 });
 
 //POST "/toy/add" =>  recoge la info del form add toy
-router.post("/add", async (req, res, next) => {
+router.post("/add", uploader.single("photo"),  async (req, res, next) => {
   try {
-    const newToy = await Toy.create(req.body);
+    const { name, description, status, commentToy } = req.body
+    const oneToy = {
+      name: name,
+      description: description,
+      photo: req.file.path,
+      status: status,
+      commentToy: commentToy
+    }
+
+    const newToy = await Toy.create(oneToy);
     const updateUser = await User.findById(req.session.activeUser._id);
     const {
       username,
@@ -120,6 +131,7 @@ router.post("/add", async (req, res, next) => {
       toyReserved: toyReserved,
       commentUser: commentUser,
       role: role,
+      avatar: avatar
     };
     const creatorUser = await User.findByIdAndUpdate(
       req.session.activeUser._id,
@@ -184,15 +196,15 @@ router.get("/:idtoy/edit", async (req, res, next) => {
 });
 
 //POST ("/toy/:idtoy/edit")
-router.post("/:idtoy/edit", async (req, res, next) => {
+router.post("/:idtoy/edit",uploader.single("photo"), async (req, res, next) => {
   const { idtoy } = req.params;
   try {
-    const { name, description, photo, status, commentToy } = req.body;
+    const { name, description, status, commentToy } = req.body;
 
     const newToy = {
       name: name,
       description: description,
-      photo: photo,
+      photo: req.file.path,
       status: status,
       commentToy: commentToy,
     };

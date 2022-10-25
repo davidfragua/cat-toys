@@ -1,5 +1,5 @@
 <div>
-  <form action="/toy/{{oldToy._id}}/edit" method="POST">
+  <form action="/toy/{{oldToy._id}}/edit" method="POST" enctype="multipart/form-data">
     <label for="name">Nombre:</label>
     <input type="text" name="name" value="{{oldToy.name}}" />
     <br />
@@ -7,7 +7,7 @@
     <input type="text" name="description" value="{{oldToy.description}}" />
     <br />
     <label for="photo">Photo:</label>
-    <input type="text" name="photo" value="{{oldToy.photo}}" />
+    <input type="file" name="photo" value="{{oldToy.photo}}" />
     <br />
     <label for="status">Status:</label>
     <select name="status">

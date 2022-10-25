@@ -2,12 +2,13 @@
 
   <h3>Editar los datos</h3>
 
-  <form action="/user/{{activeUser._id}}/edit" method="POST">
+  <form action="/user/{{activeUser._id}}/edit" method="POST" enctype="multipart/form-data">
 
     <label for="username">Username:</label>
     <input type="text" name="username" value="{{activeUser.username}}" />
     <br />
-    <label for="">Avatar</label>
+    <label for="avatar">Avatar</label>
+    <input type="file" name="avatar">
     <br />
     <label for="email">Email:</label>
     <input type="text" name="email" value="{{activeUser.email}}" />
