@@ -1,7 +1,7 @@
 <div>
 
 {{#with eachToy}}
-<h3>{{name}}</h3>
+<h2>{{name}}</h2>
 <p>{{description}}</p>
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
@@ -16,7 +16,7 @@
 <p>Comment written by <b>{{idUser.username}}</b></p>
 <p>{{content}}</p>
 {{#if ../../isUserAdmin}} 
-<a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete</button></a>
+<a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete comment</button></a>
 {{/if}}
 
 

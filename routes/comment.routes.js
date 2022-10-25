@@ -7,7 +7,7 @@ const Comment = require("../models/Comment.model");
 router.get("/:idcomment/edit", async (req, res, next) => {
   const { idcomment } = req.params;
   try {
-    const oneComment = await Comment.findById(idcomment);
+    const oneComment = await Comment.findById(idcomment). populate("idToy");
     res.render("comment/edit.hbs", {
       oneComment,
     });

@@ -1,38 +1,35 @@
 <div>
   <div>
     <h3>
-      Personal Page of
-      {{userFound.username}}
+     <img src="{{userFound.avatar}}" alt="Avatar" width="50px">  {{userFound.username}}
     </h3>
-    <p>Avatar:</p>
-    <img src="{{userFound.avatar}}" alt="Avatar" width="50px">
+  
+    
     <div>
       <h4>Toy reserved by {{userFound.username}} :</h4>
       {{#with userFound.toyReserved}}
-        <p>Toy:</p>
-        <p>{{this.name}}</p>
-        <img src="{{this.photo}}" alt="{{this.name}}" width="50px">
-        {{!-- <form action="/toy/removereserve" method="POST"> --}}
-        
-        {{!-- </form> --}}
+        <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
+        <img src="{{this.photo}}" alt="{{this.name}}" width="50px">  
         <a href="/toy/removereserve"> 
         <button>Remove Toy</button>
         </a>
       {{/with}}
+    </div>
+    <br>
+    <div>
       <h4>Toys offered by {{userFound.username}} :</h4>
       {{#each userFound.toyOffered}}
-        <p>Toy:</p>
-        <p>{{this.name}}</p>
+        <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">
         <a href="/toy/{{this._id}}/edit"><button>Edit Toy</button></a>
       {{/each}}
 
     </div>
-
+    <br>
     <div>
       <h4>Comments by {{userFound.username}} :</h4>
       {{#each userFound.commentUser}}
-        <p>Comment for <b>{{this.idToy.name}}</b>:</p>
+        <p>Comment for <b><a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></b>:</p>
         <p>{{this.content}}</p>
         <a href="/comment/{{this._id}}/edit"><button>Edit Comment</button></a>
       {{/each}}

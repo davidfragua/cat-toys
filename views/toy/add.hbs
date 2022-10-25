@@ -1,8 +1,13 @@
 <div>
 
+  <h3>Add Toy</h3>
+
     <form action="/toy/add" method="POST" enctype="multipart/form-data">
-      <label for="name">Nombre:</label>
+      <label for="name">Name:</label>
       <input type="text" name="name" />
+      <br />
+      <label for="description">Description:</label>
+      <input type="text" name="description" />
       <br />
       <label for="photo">Photo:</label>
       <input type="file" name="photo" />

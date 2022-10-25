@@ -1,6 +1,9 @@
 <div>
+
+<h3>Edit your toy</h3>
+
   <form action="/toy/{{oldToy._id}}/edit" method="POST" enctype="multipart/form-data">
-    <label for="name">Nombre:</label>
+    <label for="name">Name:</label>
     <input type="text" name="name" value="{{oldToy.name}}" />
     <br />
     <label for="description">Description:</label>

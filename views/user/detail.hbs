@@ -1,8 +1,8 @@
 <div>
 
-  <h3>User Data</h3>
-
-  <p>Name: {{userDetail.username}}</p>
+  <h3><img src="{{userDetail.avatar}}" alt="{{userDetail.username}}" width="50px"> {{userDetail.username}}</h3>
+  <br>
+  
 
   <div>
     <h4>Toys offered by {{userDetail.username}} :</h4>
@@ -10,7 +10,16 @@
       <p>Toy:</p>
       <p>{{this.name}}</p>
     {{/each}}
-
   </div>
+
+<div>
+<h4>Comments written by {{userDetail.username}} </h4>
+{{#each userFound.commentUser}}
+        <p>Comment for <b>{{this.idToy.name}}</b>:</p>
+        <p>{{this.content}}</p>
+      {{/each}}
+
+</div>
+
 
 </div>

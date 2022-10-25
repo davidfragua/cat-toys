@@ -265,32 +265,33 @@ router.get("/:idtoy/delete", async (req, res, next) => {
 //GET "/toy/removereserve"
 router.get("/removereserve", isLoggedIn, async (req, res,next)=>{
   try {
-    const oneUser = await User.findById(req.session.activeUser._id)
+    // const oneUser = await User.findById(req.session.activeUser._id)
 
-    const {
-      username,
-      email,
-      password,
-      toyOffered,
-      toyReserved,
-      commentUser,
-      role,
-      avatar,
-    } = oneUser
+    // const {
+    //   username,
+    //   email,
+    //   password,
+    //   toyOffered,
+    //   toyReserved,
+    //   commentUser,
+    //   role,
+    //   avatar,
+    // } = oneUser
 
-    const newUser = {
-      username: username,
-      email: email,
-      password: password,
-      toyOffered: toyOffered,
-      toyReserved: undefined,
-      commentUser: commentUser,
-      role: role,
-      avatar: avatar,
-    }
+    // const newUser = {
+    //   username: username,
+    //   email: email,
+    //   password: password,
+    //   toyOffered: toyOffered,
+    //   toyReserved: undefined,
+    //   commentUser: commentUser,
+    //   role: role,
+    //   avatar: avatar,
+    // }
     
-    const otherUser = await User.findByIdAndUpdate(req.session.activeUser._id, newUser)
-    console.log("REMOVEEE", newUser.toyReserved, "IIIIIDDD", req.session.activeUser._id)
+    const otherUser = await User.findByIdAndUpdate(req.session.activeUser._id, {
+      toyReserved: null
+    })
     res.redirect(`/user/profile`)
   } catch (error) {
     next(error)
