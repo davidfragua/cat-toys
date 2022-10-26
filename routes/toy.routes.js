@@ -48,39 +48,39 @@ router.post("/:idtoy/detail", async (req, res, next) => {
   const { idtoy } = req.params;
 
   try {
-    // const updateToy = await Toy.findById(idtoy);
-    // const updateUser = await User.findById(req.session.activeUser._id);
+    const updateToy = await Toy.findById(idtoy);
+    const updateUser = await User.findById(req.session.activeUser._id);
 
-    // const { name, description, photo, status, commentToy } = updateToy;
-    // const {
-    //   username,
-    //   email,
-    //   password,
-    //   toyOffered,
-    //   toyReserved,
-    //   commentUser,
-    //   role,
-    //   avatar,
-    // } = updateUser;
+    const { name, description, photo, status, commentToy } = updateToy;
+    const {
+      username,
+      email,
+      password,
+      toyOffered,
+      toyReserved,
+      commentUser,
+      role,
+      avatar,
+    } = updateUser;
 
-    // const newToy = {
-    //   name: name,
-    //   description: description,
-    //   photo: photo,
-    //   status: status,
-    //   commentToy: commentToy,
-    // };
+    const newToy = {
+      name: name,
+      description: description,
+      photo: photo,
+      status: status,
+      commentToy: commentToy,
+    };
 
-    // const newUser = {
-    //   username: username,
-    //   email: email,
-    //   password: password,
-    //   toyOffered: toyOffered,
-    //   toyReserved: toyReserved,
-    //   commentUser: commentUser,
-    //   role: role,
-    //   avatar: avatar,
-    // };
+    const newUser = {
+      username: username,
+      email: email,
+      password: password,
+      toyOffered: toyOffered,
+      toyReserved: toyReserved,
+      commentUser: commentUser,
+      role: role,
+      avatar: avatar,
+    };
 
     const newComment = {
       content: req.body.content,
@@ -90,18 +90,14 @@ router.post("/:idtoy/detail", async (req, res, next) => {
 
     const oneNewComment = await Comment.create(newComment);
 
-    // commentToy.push(oneNewComment._id);
-    // commentUser.push(oneNewComment._id);
+    commentToy.push(oneNewComment._id);
+    commentUser.push(oneNewComment._id);
 
-    const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, {
-      commentToy: commentToy.push(oneNewComment._id);
-    });
+    const toyToUpdate = await Toy.findByIdAndUpdate(idtoy,newToy );
 
     const userToUpdate = await User.findByIdAndUpdate(
       req.session.activeUser._id,
-      {
-        commentUser : commentUser.push(oneNewComment._id)
-      }
+      newUser
     );
 
     res.redirect(`/toy/${idtoy}/detail`);
@@ -137,33 +133,31 @@ router.post("/add", uploader.single("photo"), async (req, res, next) => {
     };
 
     const newToy = await Toy.create(oneToy);
-    // const updateUser = await User.findById(req.session.activeUser._id);
-    // const {
-    //   username,
-    //   email,
-    //   password,
-    //   toyOffered,
-    //   toyReserved,
-    //   commentUser,
-    //   role,
-    //   avatar,
-    // } = updateUser;
-    // toyOffered.push(newToy._id);
-    // const newUser = {
-    //   username: username,
-    //   email: email,
-    //   password: password,
-    //   toyOffered: toyOffered,
-    //   toyReserved: toyReserved,
-    //   commentUser: commentUser,
-    //   role: role,
-    //   avatar: avatar,
-    // };
+    const updateUser = await User.findById(req.session.activeUser._id);
+    const {
+      username,
+      email,
+      password,
+      toyOffered,
+      toyReserved,
+      commentUser,
+      role,
+      avatar,
+    } = updateUser;
+    toyOffered.push(newToy._id);
+    const newUser = {
+      username: username,
+      email: email,
+      password: password,
+      toyOffered: toyOffered,
+      toyReserved: toyReserved,
+      commentUser: commentUser,
+      role: role,
+      avatar: avatar,
+    };
     const creatorUser = await User.findByIdAndUpdate(
-      req.session.activeUser._id,{
-        toyOffered : toyOffered.push(newToy._id)
-      }
-      // newUser
+      req.session.activeUser._id,
+      newUser
     );
     res.redirect("/user/profile");
   } catch (error) {
