@@ -60,7 +60,6 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       eachToy,
       activeUser: req.session.activeUser,
       reserved: reserved,
-      arrayDates
     });
   } catch (error) {
     next(error);

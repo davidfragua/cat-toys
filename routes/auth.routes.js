@@ -14,14 +14,21 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   // aqui recibiremos la info del formulario
 
-  const { username, email, password } = req.body;
+  const { username, email, password, password1 } = req.body;
 
   
   // 1. Validaciones de backend
   // .todos los campos deben estar llenos
-  if (username === "" || email === "" || password === "") {
+  if (username === "" || email === "" || password === "" || password1 === "") {
     res.render("auth/signup.hbs", {
       errorMessage: "Debes llenar todos los campos",
+    });
+    return;
+  }
+
+  if (password !==  password1 ) {
+    res.render("auth/signup.hbs", {
+      errorMessage: "Passwords don't match",
     });
     return;
   }
