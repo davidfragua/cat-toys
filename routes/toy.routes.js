@@ -28,10 +28,12 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
     let reserved = false;
-    console.log("RESERVEDDDD", req.session.activeUser.toyReserved)
-    if (req.session.activeUser.toyReserved !== undefined) {
-      reserved = true;
-    }
+   if (req.session.activeUser !== undefined){
+     if (req.session.activeUser.toyReserved !== undefined) {
+        reserved = true;
+      }
+     
+  } 
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
