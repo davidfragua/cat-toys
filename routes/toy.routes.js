@@ -116,13 +116,7 @@ router.post("/add", uploader.single("photo"), async (req, res, next) => {
   try {
     const { name, description, status, commentToy } = req.body;
 
-    // let defaultPhoto = "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
-    // let toyPhoto
-    // if(req.body.photo === undefined) {
-    //   toyPhoto = defaultPhoto
-    // } else {
-    //   toyPhoto = req.file.path
-    // }
+    
 
     const oneToy = {
       name: name,
@@ -202,15 +196,9 @@ router.post(
   async (req, res, next) => {
     const { idtoy } = req.params;
     const { name, description, status, commentToy, photo } = req.body;
-    //console.log("FORM FOTOOO", res.locals.photoChecker, "DESCRIPTIOOON", req.body.description)
+    
     try {
-      // const previousToy = await Toy.findById(idtoy)
-      // let previousPhoto
-      // if(req.body.photo === undefined) {
-      //   previousPhoto = previousToy.photo
-      // } else {
-      //   previousPhoto = req.file?.path
-      // }
+      
       const newToy = {
         name: name,
         description: description,

@@ -14,17 +14,9 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   // aqui recibiremos la info del formulario
 
-  const { username, email, password, avatar } = req.body;
+  const { username, email, password } = req.body;
 
-  let defaultAvatar = "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
-    let userAvatar
-    if(req.body.photo === undefined) {
-      userAvatar = defaultAvatar
-    } else {
-      userAvatar = req.file.path
-    }
-
-
+  
   // 1. Validaciones de backend
   // .todos los campos deben estar llenos
   if (username === "" || email === "" || password === "") {
@@ -77,7 +69,7 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
     // 3. Crear el perfil del usuario
     const newUser = {
       username: username,
-      avatar: userAvatar,
+      avatar: req.file?.path,
       email: email,
       password: hashPassword,
     };

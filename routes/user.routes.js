@@ -101,17 +101,11 @@ router.post("/:userid/edit", isLoggedIn, uploader.single("avatar"), async (req, 
     const salt = await bcrypt.genSalt(12);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    let defaultAvatar = "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
-    let userAvatar
-    if(req.body.photo === undefined) {
-      userAvatar = defaultAvatar
-    } else {
-      userAvatar = req.file.path
-    }
+    
 
     const updateUser = {
       username: req.body.username,
-      avatar: userAvatar,
+      avatar: req.file?.path,
       email: req.body.email,
       password: hashPassword,
       toyOffered: oldUser.toyOffered,
