@@ -38,7 +38,7 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   }
 
   // TODO dos campos de contraseña. Verificar que sean igual. if (password1 !== password2)
-  // TODO validar el formato de correo electronico
+  
 
   try {
     // validacion de que el usuario sea unico, no esté actualmente registrado en la DB

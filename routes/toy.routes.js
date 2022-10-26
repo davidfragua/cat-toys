@@ -28,15 +28,39 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
     let reserved = false;
-    console.log("RESERVEDDDD", req.session.activeUser.toyReserved)
     if (req.session.activeUser.toyReserved !== undefined) {
       reserved = true;
     }
+
+    //para comments, para mostrar la fecha de edicion si ha sido modificado.
+
+    //console.log("COMMETNS DATEE", eachToy.commentToy[0].createdAt)
+
+    //const currentDate = new Date();
+
+// const currentDayOfMonth = eachToy.commentToy[0].createdAt.getDate();
+// const currentMonth = eachToy.commentToy[0].createdAt.getMonth(); // Be careful! January is 0, not 1
+// const currentYear = eachToy.commentToy[0].createdAt.getFullYear();
+
+// const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+// console.log("DATESTRIIIING", dateString)
+
+// let arrayDates = []
+// eachToy.commentToy.forEach( (elem)=>{
+//   if(eachToy.commentToy[0].createdAt> eachToy.commentToy[0].updattedAt) {
+//    arrayDates.push(elem.createdAt)
+//   } else {
+//     arrayDates.push(elem.updatedAt)
+//   }
+// })
+
+//console.log(arrayDates)
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
       activeUser: req.session.activeUser,
       reserved: reserved,
+      arrayDates
     });
   } catch (error) {
     next(error);
