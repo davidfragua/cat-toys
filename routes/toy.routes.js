@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { isLoggedIn } = require("../middlewares/auth.middleware");
+const { isLoggedIn,isAdmin, photoChecker } = require("../middlewares/auth.middleware");
 const router = express.Router();
 const Toy = require("../models/Toy.model");
 const Comment = require("../models/Comment.model");
@@ -116,18 +116,18 @@ router.post("/add", uploader.single("photo"), async (req, res, next) => {
   try {
     const { name, description, status, commentToy } = req.body;
 
-    let defaultPhoto = "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
-    let toyPhoto
-    if(req.body.photo === undefined) {
-      toyPhoto = defaultPhoto
-    } else {
-      toyPhoto = req.file.path
-    }
+    // let defaultPhoto = "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
+    // let toyPhoto
+    // if(req.body.photo === undefined) {
+    //   toyPhoto = defaultPhoto
+    // } else {
+    //   toyPhoto = req.file.path
+    // }
 
     const oneToy = {
       name: name,
       description: description,
-      photo: toyPhoto,
+      photo: req.file?.path,
       status: status,
       commentToy: commentToy,
     };
@@ -186,7 +186,7 @@ router.get("/:idtoy/edit", async (req, res, next) => {
   const { idtoy } = req.params;
   try {
     const oldToy = await Toy.findById(idtoy);
-
+    console.log("OLTTOYPHOTO", oldToy.photo)
     res.render("toy/edit.hbs", {
       oldToy,
     });
@@ -201,19 +201,26 @@ router.post(
   uploader.single("photo"),
   async (req, res, next) => {
     const { idtoy } = req.params;
+    const { name, description, status, commentToy, photo } = req.body;
+    //console.log("FORM FOTOOO", res.locals.photoChecker, "DESCRIPTIOOON", req.body.description)
     try {
-      const previousToy = await Toy.findById(idtoy)
-
-      let previousPhoto
-      if(req.body.photo === undefined) {
-        previousPhoto = previousToy.photo
-      } else {
-        previousPhoto = req.file.path
-      }
-
-      const updatedToy = await Toy.findByIdAndUpdate(idtoy, {
-        photo: previousPhoto
-      });
+      // const previousToy = await Toy.findById(idtoy)
+      // let previousPhoto
+      // if(req.body.photo === undefined) {
+      //   previousPhoto = previousToy.photo
+      // } else {
+      //   previousPhoto = req.file?.path
+      // }
+      const newToy = {
+        name: name,
+        description: description,
+        photo: req.file?.path,
+        status: status,
+        commentToy: commentToy,
+      };
+      console.log("PHOOTO", newToy.photo)
+      const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy);
+      
       res.redirect(`/user/profile`);
     } catch (error) {
       next(error);

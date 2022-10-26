@@ -14,7 +14,12 @@ const isAdmin = (req, res, next) => {
   }
 };
 
+const photoChecker =(req, res, next)=>{
+  res.locals.photoChecker = req.body.photo
+}
+
 module.exports = {
   isLoggedIn,
   isAdmin,
+  photoChecker,
 };

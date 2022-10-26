@@ -13,7 +13,7 @@
 {{/if}}
 
 {{#each commentToy}}
-<p>Comment written by <b>{{idUser.username}}</b></p>
+<p>Comment written by <b><a href="/user/{{idUser._id}}/detail">{{idUser.username}}</a></b> at {{createdAt}}</p>
 <p>{{content}}</p>
 {{#if ../../isUserAdmin}} 
 <a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete comment</button></a>
