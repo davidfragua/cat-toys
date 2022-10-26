@@ -14,13 +14,43 @@ h1 {
 
 .navbar{
   display: flex;
-  justify-content: right;  
+  justify-content:space-between;  
   position: fixed;
   width:100%;
   top:0;
   left: 0;
   background-color: white;
-  padding-right: 4vw;
+  padding-right: 10vw;
   padding-top: 2vh;
+  padding-left: 8vw;
 
+
+}
+
+#logo-img {
+  max-height: 50px;
+  width: auto;
+}
+
+#toy-list {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.toys-li {
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width:20vw;
+  margin: 4vw 0;
+  align-items: center;
+
+}
+
+.toys-li img {
+  width: 12vw;
+  height: auto;
 }

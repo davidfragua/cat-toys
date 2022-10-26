@@ -13,8 +13,12 @@
 
    <body>
 
-<nav class="navbar shadow p-3 mb-5 bg-body rounded">
+<nav class="navbar shadow mb-5 bg-body rounded">
+<div>
+   <img id = "logo-img" src="https://res.cloudinary.com/dgsjejaed/image/upload/v1666802523/cat-toys/Cat_Toys_logo_hxkm9s.png" alt="">
 
+</div>
+<div>
 <ul class="nav nav-pills">
    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
    <li class="nav-item"><a class="nav-link" href="/toy/list">Toy List</a></li>
@@ -27,7 +31,7 @@
       {{else}}
    <li class="nav-item"><a class="nav-link" href="/auth/login">Log In</a></li>
    <li class="nav-item"><a class="nav-link active" href="/auth/signup">Sign Up</a></li>
-
+</div>
 
    {{/if}}
 
@@ -39,7 +43,7 @@
       {{{body}}}
 
 
-<footer>Created by Eduard and David</footer>
+{{!-- <footer>Created by Eduard and David</footer> --}}
 
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
