@@ -28,12 +28,10 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
     let reserved = false;
-   if (req.session.activeUser !== undefined){
-     if (req.session.activeUser.toyReserved !== undefined) {
-        reserved = true;
-      }
-     
-  } 
+    console.log("RESERVEDDDD", req.session.activeUser.toyReserved)
+    if (req.session.activeUser.toyReserved !== undefined) {
+      reserved = true;
+    }
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
@@ -50,39 +48,39 @@ router.post("/:idtoy/detail", async (req, res, next) => {
   const { idtoy } = req.params;
 
   try {
-    const updateToy = await Toy.findById(idtoy);
-    const updateUser = await User.findById(req.session.activeUser._id);
+    // const updateToy = await Toy.findById(idtoy);
+    // const updateUser = await User.findById(req.session.activeUser._id);
 
-    const { name, description, photo, status, commentToy } = updateToy;
-    const {
-      username,
-      email,
-      password,
-      toyOffered,
-      toyReserved,
-      commentUser,
-      role,
-      avatar,
-    } = updateUser;
+    // const { name, description, photo, status, commentToy } = updateToy;
+    // const {
+    //   username,
+    //   email,
+    //   password,
+    //   toyOffered,
+    //   toyReserved,
+    //   commentUser,
+    //   role,
+    //   avatar,
+    // } = updateUser;
 
-    const newToy = {
-      name: name,
-      description: description,
-      photo: photo,
-      status: status,
-      commentToy: commentToy,
-    };
+    // const newToy = {
+    //   name: name,
+    //   description: description,
+    //   photo: photo,
+    //   status: status,
+    //   commentToy: commentToy,
+    // };
 
-    const newUser = {
-      username: username,
-      email: email,
-      password: password,
-      toyOffered: toyOffered,
-      toyReserved: toyReserved,
-      commentUser: commentUser,
-      role: role,
-      avatar: avatar,
-    };
+    // const newUser = {
+    //   username: username,
+    //   email: email,
+    //   password: password,
+    //   toyOffered: toyOffered,
+    //   toyReserved: toyReserved,
+    //   commentUser: commentUser,
+    //   role: role,
+    //   avatar: avatar,
+    // };
 
     const newComment = {
       content: req.body.content,
@@ -92,14 +90,18 @@ router.post("/:idtoy/detail", async (req, res, next) => {
 
     const oneNewComment = await Comment.create(newComment);
 
-    commentToy.push(oneNewComment._id);
-    commentUser.push(oneNewComment._id);
+    // commentToy.push(oneNewComment._id);
+    // commentUser.push(oneNewComment._id);
 
-    const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, newToy);
+    const toyToUpdate = await Toy.findByIdAndUpdate(idtoy, {
+      commentToy: commentToy.push(oneNewComment._id);
+    });
 
     const userToUpdate = await User.findByIdAndUpdate(
       req.session.activeUser._id,
-      newUser
+      {
+        commentUser : commentUser.push(oneNewComment._id)
+      }
     );
 
     res.redirect(`/toy/${idtoy}/detail`);
@@ -135,31 +137,33 @@ router.post("/add", uploader.single("photo"), async (req, res, next) => {
     };
 
     const newToy = await Toy.create(oneToy);
-    const updateUser = await User.findById(req.session.activeUser._id);
-    const {
-      username,
-      email,
-      password,
-      toyOffered,
-      toyReserved,
-      commentUser,
-      role,
-      avatar,
-    } = updateUser;
-    toyOffered.push(newToy._id);
-    const newUser = {
-      username: username,
-      email: email,
-      password: password,
-      toyOffered: toyOffered,
-      toyReserved: toyReserved,
-      commentUser: commentUser,
-      role: role,
-      avatar: avatar,
-    };
+    // const updateUser = await User.findById(req.session.activeUser._id);
+    // const {
+    //   username,
+    //   email,
+    //   password,
+    //   toyOffered,
+    //   toyReserved,
+    //   commentUser,
+    //   role,
+    //   avatar,
+    // } = updateUser;
+    // toyOffered.push(newToy._id);
+    // const newUser = {
+    //   username: username,
+    //   email: email,
+    //   password: password,
+    //   toyOffered: toyOffered,
+    //   toyReserved: toyReserved,
+    //   commentUser: commentUser,
+    //   role: role,
+    //   avatar: avatar,
+    // };
     const creatorUser = await User.findByIdAndUpdate(
-      req.session.activeUser._id,
-      newUser
+      req.session.activeUser._id,{
+        toyOffered : toyOffered.push(newToy._id)
+      }
+      // newUser
     );
     res.redirect("/user/profile");
   } catch (error) {
@@ -171,34 +175,11 @@ router.post("/add", uploader.single("photo"), async (req, res, next) => {
 router.get("/:idtoy/reserve", isLoggedIn, async (req, res, next) => {
   const { idtoy } = req.params;
   try {
-    const oldUser = await User.findById(req.session.activeUser._id);
-    let {
-      username,
-      email,
-      password,
-      toyOffered,
-      toyReserved,
-      commentUser,
-      role,
-      avatar,
-    } = oldUser;
-
-    toyReserved = idtoy;
-
-    const updateUser = {
-      username: username,
-      email: email,
-      password: password,
-      toyOffered: toyOffered,
-      toyReserved: toyReserved,
-      commentUser: commentUser,
-      role: role,
-      avatar: avatar,
-    };
-
     const newUser = await User.findByIdAndUpdate(
       req.session.activeUser._id,
-      updateUser
+      {
+        toyReserved : idtoy
+      }
     );
     res.redirect(`/toy/${idtoy}/detail`);
   } catch (error) {
@@ -227,7 +208,6 @@ router.post(
   async (req, res, next) => {
     const { idtoy } = req.params;
     try {
-      const { name, description, status, commentToy } = req.body;
       const previousToy = await Toy.findById(idtoy)
 
       let previousPhoto
@@ -237,15 +217,9 @@ router.post(
         previousPhoto = req.file.path
       }
 
-      const newToy = {
-        name: name,
-        description: description,
-        photo: previousPhoto,
-        status: status,
-        commentToy: commentToy,
-      };
-
-      const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy);
+      const updatedToy = await Toy.findByIdAndUpdate(idtoy, {
+        photo: previousPhoto
+      });
       res.redirect(`/user/profile`);
     } catch (error) {
       next(error);
@@ -267,30 +241,6 @@ router.get("/:idtoy/delete", async (req, res, next) => {
 //GET "/toy/removereserve"
 router.get("/removereserve", isLoggedIn, async (req, res,next)=>{
   try {
-    // const oneUser = await User.findById(req.session.activeUser._id)
-
-    // const {
-    //   username,
-    //   email,
-    //   password,
-    //   toyOffered,
-    //   toyReserved,
-    //   commentUser,
-    //   role,
-    //   avatar,
-    // } = oneUser
-
-    // const newUser = {
-    //   username: username,
-    //   email: email,
-    //   password: password,
-    //   toyOffered: toyOffered,
-    //   toyReserved: undefined,
-    //   commentUser: commentUser,
-    //   role: role,
-    //   avatar: avatar,
-    // }
-    
     const otherUser = await User.findByIdAndUpdate(req.session.activeUser._id, {
       toyReserved: null
     })
