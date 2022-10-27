@@ -21,7 +21,7 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   // .todos los campos deben estar llenos
   if (username === "" || email === "" || password === "" || password1 === "") {
     res.render("auth/signup.hbs", {
-      errorMessage: "Debes llenar todos los campos",
+      errorMessage: "You must fill all the fields",
     });
     return;
   }
@@ -39,22 +39,19 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
   if (passwordRegex.test(password) === false) {
     res.render("auth/signup.hbs", {
       errorMessage:
-        "La contraseña debe tener minimo 8 caracteres, una mayuscula y un numero",
+        "Password must be 8 characters long, at least 1 Capital letter and 1 number",
     });
     return;
   }
-
-  // TODO dos campos de contraseña. Verificar que sean igual. if (password1 !== password2)
   
 
   try {
     // validacion de que el usuario sea unico, no esté actualmente registrado en la DB
     const foundUser = await User.findOne({ username: username });
-    console.log(foundUser);
     if (foundUser !== null) {
       // si existe en la BD
       res.render("auth/signup.hbs", {
-        errorMessage: "Credenciales ya existentes",
+        errorMessage: "Credentials already exist",
       });
       return;
     }
@@ -64,7 +61,7 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
     if (foundEmail !== null) {
       // si existe en la BD
       res.render("auth/signup.hbs", {
-        errorMessage: "Credenciales ya existentes",
+        errorMessage: "Credentials already exist",
       });
       return;
     }
@@ -102,7 +99,7 @@ router.post("/login", async (req, res, next) => {
   // 1. validaciones de backend
   if (email === "" || password === "") {
     res.render("auth/login.hbs", {
-      errorMessage: "Los campos deben estar completos",
+      errorMessage: "You must fill all the fields",
     });
     return;
   }
@@ -113,7 +110,7 @@ router.post("/login", async (req, res, next) => {
     if (foundUser === null) {
       // si no existe
       res.render("auth/login.hbs", {
-        errorMessage: "Credenciales incorrectas ",
+        errorMessage: "Wrong credentials",
       });
       return;
     }
@@ -123,7 +120,7 @@ router.post("/login", async (req, res, next) => {
     console.log("isPasswordValid", isPasswordValid);
     if (isPasswordValid === false) {
       res.render("auth/login.hbs", {
-        errorMessage: "Credenciales incorrectas",
+        errorMessage: "Wrong credentials",
       });
       return;
     }

@@ -1,24 +1,32 @@
-<div>
+<div id="edit-toy">
 
 <h3>Edit your toy</h3>
 
   <form action="/toy/{{oldToy._id}}/edit" method="POST" enctype="multipart/form-data">
-    <label for="name">Name:</label>
-    <input type="text" name="name" value="{{oldToy.name}}" />
-    <br />
-    <label for="description">Description:</label>
-    <input type="text" name="description" value="{{oldToy.description}}"/>
-    <br />
-    <label for="photo">Photo:</label>
-    <input type="file" name="photo" value="{{oldToy.photo}}"/>
-    <br />
-    <label for="status">Status:</label>
-    <select name="status">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input type="text" name="name" class="form-control" value="{{oldToy.name}}" />
+ </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <textarea rows="8" name="description" class="form-control" >{{oldToy.description}}</textarea>
+  </div>
+  <div class="mb-3">
+    <label for="photo" class="form-label">Photo:</label>
+    <input type="file" name="photo" class="form-control" value="{{oldToy.photo}}"/>
+  </div>
+   <div class="mb-3">
+    <label for="status" class="form-label">Status:</label>
+    <select name="status" class="form-select">
       <option value="new">New</option>
       <option value="used">Used</option>
       <option value="trash">Trash</option>
     </select>
-    <br />
-    <button>Confirm changes</button>
+   </div>
+    <br>
+    <div id="btn-edit-toy">
+    <button type="submit" class="btn btn-primary">Confirm changes</button>
+    </div>
+    <p class="error-message" style="color: red">{{errorMessage}}</p>
   </form>
 </div>

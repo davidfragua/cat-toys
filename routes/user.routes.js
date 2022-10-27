@@ -76,10 +76,44 @@ router.get("/list", isLoggedIn, async (req, res, next) => {
 router.get("/:userid/detail", isLoggedIn, async (req, res, next) => {
   const { userid } = req.params;
   try {
-    const userDetail = await User.findById(userid).populate("toyOffered").populate("commentUser");
-    console.log("USERDETAIL", userDetail);
+    const userDetail = await User.findById(userid).populate("toyOffered").populate("commentUser").populate({
+      path: "commentUser",
+      populate: {path: "idToy", populate: {path:"name"}}
+    });
+  //para comments, para mostrar la fecha de edicion si ha sido modificado.
+const dateFormat = (date) => {
+  let str= ""
+  let min=""
+  let sec=""
+  if (date.getMinutes()<10){
+    min+= "0"+date.getMinutes()
+  } else {
+    min+= date.getMinutes()
+  }
+  if(date.getSeconds()<10){
+    sec+= "0"+date.getSeconds()
+  }else {
+    sec+= date.getSeconds()
+  }
+  str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
+  return str
+}
+
+let objDates = {};
+userDetail.commentUser.forEach((elem) => {
+  if (elem.createdAt >= elem.updatedAt) {
+    let strDate = dateFormat(elem.createdAt)
+    objDates[elem._id]="created on "+strDate;
+  } else {
+    let strDate = dateFormat(elem.updatedAt)
+    objDates[elem._id]="edited on "+strDate;
+  }
+});
+
+
     res.render("user/detail.hbs", {
       userDetail: userDetail,
+      objDates
     });
   } catch (error) {
     next(error);

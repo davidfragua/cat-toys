@@ -7,16 +7,49 @@
   <div class="col-md-5">
     <h4>Toys offered by {{userDetail.username}} :</h4>
     {{#each userDetail.toyOffered}}
-      <p>{{this.name}}</p>
+      <br class="my-0" style="height: 20px;" />
+     <div> <a href="/toy/{{this._id}}/detail">{{this.name}}</a></div>
+    <br>
+    <div>
+    <img src="{{this.photo}}" alt="{{this.name}}" width="50px"> 
+    </div>
+   <br>
     {{/each}}
   </div>
 
 <div class="col-md-5">
 <h4>Comments written by {{userDetail.username}} </h4>
-{{#each userFound.commentUser}}
-        <p>Comment for <b>{{this.idToy.name}}</b>:</p>
-        <p>{{this.content}}</p>
+{{#each userDetail.commentUser}}
+        {{!-- <p>Comment for <b>{{this.idToy.name}}</b>:</p>
+        <p>{{this.content}}</p> --}}
+
+<br class="my-0" style="height: 20px;" />
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="{{this.idToy.photo}}" alt="avatar" width="60"
+                height="60" />
+              <div>
+                <h6 class="fw-bold mb-1"> <a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></h6>
+                <div class="d-flex align-items-center mb-3">
+                  <p class="mb-0">
+                    {{lookup ../objDates this._id }}
+                  </p>
+                </div>
+                <p class="mb-0">
+                  {{this.content}}
+                </p>
+              </div>
+            </div>
+            <br class="my-0" style="height: 10px;" />
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+          <hr class="my-0" style="height: 10px;" />
+
+
       {{/each}}
+
+
 
 </div>
 

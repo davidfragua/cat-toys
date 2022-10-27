@@ -1,11 +1,36 @@
-<div>
+<div >
 
 <h3>Edit your comment</h3>
 
-  <img src="{{oneComment.idToy.photo}}" alt="{{oneComment.idToy.name}}" width="50px">{{oneComment.idToy.name}}
-  <form action="/comment/{{oneComment._id}}/edit" method="POST">
-    <label for="content"></label>
-    <input type="textarea" name="content" value="{{oneComment.content}}" />
-    <button>Confirm changes</button>
-  </form>
+<section>
+  <div class="container my-5 py-5 text-dark">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-6">
+        <div class="card">
+          <div class="card-body p-4">
+            <div class="d-flex flex-start w-100">
+              {{!-- <img class="rounded-circle shadow-1-strong me-3"
+                src="{{activeUser.avatar}}" alt="avatar" width="65"
+                height="65" /> --}}
+              <div class="w-100">
+                <img src="{{oneComment.idToy.photo}}" alt="{{oneComment.idToy.name}}" width="50px">{{oneComment.idToy.name}}
+                <h5>Edit your comment</h5>
+                <form action="/comment/{{oneComment._id}}/edit" method="POST">
+                <div class="form-outline">
+                  <textarea class="form-control" id="textAreaExample" rows="4" name="content" >{{oneComment.content}}</textarea>
+                <label class="form-label" for="textAreaExample">What do you think?</label>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                  <button class="btn btn-primary">Confirm changes</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </div>

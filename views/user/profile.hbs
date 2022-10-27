@@ -8,6 +8,7 @@
     <div  class="col-md-4">
       <h4>Toy reserved by {{userFound.username}} :</h4>
       {{#with userFound.toyReserved}}
+       <br class="my-0" style="height: 20px;" />
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">  
         <a href="/toy/removereserve"> 
@@ -19,9 +20,15 @@
     <div class="col-md-4">
       <h4>Toys offered by {{userFound.username}} :</h4>
       {{#each userFound.toyOffered}}
+       <br class="my-0" style="height: 20px;" />
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">
         <a href="/toy/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Toy</button></a>
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+          <hr class="my-0" style="height: 10px;" />
       {{/each}}
     </div>
     <br>
