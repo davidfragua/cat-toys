@@ -1,5 +1,4 @@
 <div>
-
 {{#with eachToy}}
 <h2>{{name}}</h2>
 <p>{{description}}</p>
@@ -16,32 +15,43 @@
     {{/if}}
 {{/if}}
 
-{{#each commentToy}}
-<p>Comment written by <b><a href="/user/{{idUser._id}}/detail">{{idUser.username}}</a></b> {{lookup ../../objDates this._id }}</p>
-<p>{{content}}</p>
-{{#if ../../isUserAdmin}} 
-<a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete comment</button></a>
-{{/if}}
 
-
-{{/each}}
-
-{{/with}}
-
+<section>
+  <div class="container my-5 py-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10">
+        <div class="card text-dark">
+          <div class="card-body p-4">
+            <h4 class="mb-0">Comments</h4>
+            <p class="fw-light mb-4 pb-2">Latest Comments by users for this Toy</p>
+            {{#each commentToy}}
+            <hr class="my-0" />
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="{{idUser.avatar}}" alt="avatar" width="60"
+                height="60" />
+              <div>
+                <h6 class="fw-bold mb-1">{{idUser.username}}</h6>
+                <div class="d-flex align-items-center mb-3">
+                  <p class="mb-0">
+                    {{lookup ../../objDates this._id }}
+                  </p>
+                </div>
+                <p class="mb-0">
+                  {{content}}
+                </p>
+              </div>
+            </div>
+          <hr class="my-0" style="height: 10px;" />
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{/with}} 
 {{#if isUserActive}}
-{{!-- <div>
-<form action="/toy/{{eachToy._id}}/detail" method="POST">
-
-<label for="content">Comment:</label>
-<br>
-<textarea rows="4" cols="50"  name="content"></textarea>
-<br>
-<button>Send comment</button>
-</form>
-
-</div> --}}
-
- 
 <section>
   <div class="container my-5 py-5 text-dark">
     <div class="row d-flex justify-content-left">
@@ -60,7 +70,7 @@
                   <label class="form-label" for="textAreaExample">What do you think?</label>
                 </div>
                 <div class="d-flex justify-content-between mt-3">
-                  <button type="button" class="btn btn-success">Send</button>
+                  <button class="btn btn-success">Send</button>
                 </div>
                 </form>
               </div>
@@ -71,7 +81,5 @@
     </div>
   </div>
 </section>
-
-
 {{/if}}
 </div>
