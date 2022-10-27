@@ -297,4 +297,18 @@ router.get("/removereserve", isLoggedIn, async (req, res, next) => {
   }
 });
 
+
+//GET "/toy/removereserve/:idtoy"
+router.get("/removereservetoy/:idtoy", isLoggedIn, async (req, res, next) => {
+  const {idtoy} = req.params
+  try {
+    const otherUser = await User.findByIdAndUpdate(req.session.activeUser._id, {
+      toyReserved: null,
+    });
+    res.redirect(`/toy/${idtoy}/detail`);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
