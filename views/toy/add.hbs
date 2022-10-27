@@ -1,24 +1,31 @@
-<div>
+<div id = "add-toy">
 
   <h3>Add Toy</h3>
 
     <form action="/toy/add" method="POST" enctype="multipart/form-data">
-      <label for="name">Name:</label>
-      <input type="text" name="name" />
-      <br />
-      <label for="description">Description:</label>
-      <input type="text" name="description" />
-      <br />
-      <label for="photo">Photo:</label>
-      <input type="file" name="photo" />
-      <br />
-      <label for="status">Status:</label>
-      <select name="status">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" name="name" class="form-control"/>
+      </div>
+      <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <input type="text" name="description" class="form-control" />
+      </div>
+      <div class="mb-3">
+      <label for="photo" class="form-label">Photo:</label>
+      <input type="file" name="photo" class="form-control"/>
+      </div>
+      <div class="mb-3"></div>
+      <label for="status" class="form-label">Status:</label>
+      <select name="status" class="form-select">
         <option value="new">New</option>
         <option value="used">Used</option>
         <option value="trash">Trash</option>
       </select>
       <br />
-      <button>Add Toy</button>
+      <div id="btn-add-toy">
+      <button type="submit" class="btn btn-primary">Add Toy</button>
+      </div>
+      <p class="error-message" style="color: red">{{errorMessage}}</p>
     </form>
   </div>

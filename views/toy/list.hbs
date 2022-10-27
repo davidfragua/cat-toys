@@ -11,8 +11,9 @@
 <p>{{status}}</p>
 
  {{#if ../isUserAdmin}}
-        <a href="/toy/{{_id}}/edit"><button>Edit Toy</button></a>
-        <a href="/toy/{{_id}}/delete"><button>Delete Toy</button></a>
+        <a href="/toy/{{_id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Toy</button></a>
+        <br>
+        <a href="/toy/{{_id}}/delete"><button type="button" class="btn btn-secondary btn-sm">Delete Toy</button></a>
     {{/if}}
 </li>
 {{/each}}
