@@ -1,21 +1,32 @@
 <div>
 {{#with eachToy}}
-<h2>{{name}}</h2>
-<p>{{description}}</p>
-<img src="{{photo}}" alt="{{name}}">
-<p>{{status}}</p>
+<h3> {{name}}</h3>
+  <br>
+  <div class="row">
+    <div class="col-md-5">
+<img src="{{photo}}" alt="{{name}}" width="500px">
+    </div>
+    <div class="col-md-5">
+<h5>{{description}}</h5>
+<br>
+<br>
+<h5>Status  {{status}}</h5>
+<div>
+<br>
+<br>
 {{#if ../isUserActive}}
-    {{#if ../reserved}}
-        <p>Ya tienes un juguete reservado, la siguiente reserva substituirá a la anterior</p>
-    {{/if}}
     {{#if ../reservedButton}}
-        <a href="/toy/{{_id}}/reserve"><button>Reserve it</button></a>
+    {{#if ../reserved}}
+        <p style="color: red">You already have a toy booked, booking again will replace your current booking</p>
+    {{/if}}
+        <a href="/toy/{{_id}}/reserve"><button class="btn btn-primary btn-sm">Reserve it</button></a>
     {{else}}
-        <a href="/toy/removereserve"><button>Remove Toy</button></a>
+        <a href="/toy/removereserve"><button class="btn btn-secondary btn-sm">Remove Toy</button></a>
     {{/if}}
 {{/if}}
-
-
+</div>
+    </div>
+</div>
 <section>
   <div class="container my-5 py-5">
     <div class="row d-flex justify-content-center">
@@ -25,7 +36,7 @@
             <h4 class="mb-0">Comments</h4>
             <p class="fw-light mb-4 pb-2">Latest Comments by users for this Toy</p>
             {{#each commentToy}}
-            <hr class="my-0" />
+            <br class="my-0" />
             <div class="d-flex flex-start">
               <img class="rounded-circle shadow-1-strong me-3"
                 src="{{idUser.avatar}}" alt="avatar" width="60"
@@ -42,6 +53,7 @@
                 </p>
               </div>
             </div>
+            <br class="my-0" />
           <hr class="my-0" style="height: 10px;" />
             {{/each}}
           </div>
