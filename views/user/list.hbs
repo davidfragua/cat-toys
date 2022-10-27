@@ -1,4 +1,4 @@
-<div>
+<div id="user-list">
     <h3>Users List</h3>
     <ul class="list-group list-group-flush">
     {{#each userList}}
@@ -6,7 +6,7 @@
 
 
     {{#if ../isUserAdmin}}
-    <a href="/user/{{_id}}/delete"><button>Delete User</button></a>
+    <a href="/user/{{_id}}/delete"><button type="button" class="btn btn-secondary btn-sm">Delete User</button></a>
     {{/if}}
     {{/each}}
     </ul>

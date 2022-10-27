@@ -11,7 +11,7 @@ a {
 h1 {
   color: 15px;
 }
-h2 {
+h2,h3 {
   padding-bottom: 2vh;
   padding-top: 1vh;
   text-align: center;
@@ -129,4 +129,14 @@ h2 {
   justify-content: center;
   margin-top: 3vh;
   margin-bottom: 2vh;
+}
+
+#user-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-list a {
+  text-decoration: none;
 }

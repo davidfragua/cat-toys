@@ -1,11 +1,11 @@
 <div>
-  <div>
+  
     <h3>
      <img src="{{userFound.avatar}}" alt="Avatar" width="50px">  {{userFound.username}}
     </h3>
   
-  
-    <div>
+ <div class="row">
+    <div  class="col-md-4">
       <h4>Toy reserved by {{userFound.username}} :</h4>
       {{#with userFound.toyReserved}}
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
@@ -16,7 +16,7 @@
       {{/with}}
     </div>
     <br>
-    <div >
+    <div class="col-md-4">
       <h4>Toys offered by {{userFound.username}} :</h4>
       {{#each userFound.toyOffered}}
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
@@ -26,7 +26,7 @@
 
     </div>
     <br>
-    <div >
+    <div class="col-md-4">
       <h4>Comments by {{userFound.username}} :</h4>
       {{#each userFound.commentUser}}
         <p>Comment for <b><a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></b>:</p>
@@ -35,7 +35,7 @@
       {{/each}}
 
     </div>
-
+   </div>
   </div>
 
   

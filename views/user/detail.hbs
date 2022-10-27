@@ -3,8 +3,8 @@
   <h3><img src="{{userDetail.avatar}}" alt="{{userDetail.username}}" width="50px"> {{userDetail.username}}</h3>
   <br>
   
-
-  <div>
+<div class="row">
+  <div class="col-md-5">
     <h4>Toys offered by {{userDetail.username}} :</h4>
     {{#each userDetail.toyOffered}}
       <p>Toy:</p>
@@ -12,7 +12,7 @@
     {{/each}}
   </div>
 
-<div>
+<div class="col-md-5">
 <h4>Comments written by {{userDetail.username}} </h4>
 {{#each userFound.commentUser}}
         <p>Comment for <b>{{this.idToy.name}}</b>:</p>
@@ -21,5 +21,5 @@
 
 </div>
 
-
+</div>
 </div>
