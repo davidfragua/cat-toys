@@ -5,15 +5,15 @@
 <p>{{description}}</p>
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
-    {{#if ../reserved}}
+{{#if ../reserved}}
     <p>Ya tienes un juguete reservado, la siguiente reserva substituirá a la anterior</p>
-    {{/if}}
+{{/if}}
 {{#if ../isUserActive}}
 <a href="/toy/{{_id}}/reserve"><button>Reserve it</button></a>
 {{/if}}
 
 {{#each commentToy}}
-<p>Comment written by <b><a href="/user/{{idUser._id}}/detail">{{idUser.username}}</a></b> at {{createdAt}}</p>
+<p>Comment written by <b><a href="/user/{{idUser._id}}/detail">{{idUser.username}}</a></b> {{../../objDates_id}}</p>
 <p>{{content}}</p>
 {{#if ../../isUserAdmin}} 
 <a href="/comment/{{_id}}/{{../_id}}/delete"><button>Delete comment</button></a>
