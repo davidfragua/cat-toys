@@ -86,6 +86,8 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       }
     });
 
+    console.log("ACTIVEUSERRERE", req.session.activeUser)
+
     res.render("toy/toy-detail.hbs", {
       eachToy,
       activeUser: req.session.activeUser,
@@ -168,8 +170,15 @@ router.get("/add", isLoggedIn, uploader.single("photo"), (req, res, next) => {
 
 //POST "/toy/add" =>  recoge la info del form add toy
 router.post("/add", uploader.single("photo"), async (req, res, next) => {
+  const { name, description, status, commentToy } = req.body;
+  //validacion de form
+  if(name === "" || description === "") {
+    res.render("toy/add.hbs", {
+      errorMessage: "Must fill all the inputs",
+    });
+    return;
+  }
   try {
-    const { name, description, status, commentToy } = req.body;
 
     const oneToy = {
       name: name,
