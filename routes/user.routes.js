@@ -19,8 +19,39 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
         populate: { path: "idToy", populate: { path: "name" } },
       });
 
+//para comments, para mostrar la fecha de edicion si ha sido modificado.
+const dateFormat = (date) => {
+  let str= ""
+  let min=""
+  let sec=""
+  if (date.getMinutes()<10){
+    min+= "0"+date.getMinutes()
+  } else {
+    min+= date.getMinutes()
+  }
+  if(date.getSeconds()<10){
+    sec+= "0"+date.getSeconds()
+  }else {
+    sec+= date.getSeconds()
+  }
+  str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
+  return str
+}
+
+let objDates = {};
+userFound.commentUser.forEach((elem) => {
+  if (elem.createdAt >= elem.updatedAt) {
+    let strDate = dateFormat(elem.createdAt)
+    objDates[elem._id]="created on "+strDate;
+  } else {
+    let strDate = dateFormat(elem.updatedAt)
+    objDates[elem._id]="edited on "+strDate;
+  }
+});
+
     res.render("user/profile.hbs", {
       userFound,
+      objDates
     });
   } catch (error) {
     next(error);

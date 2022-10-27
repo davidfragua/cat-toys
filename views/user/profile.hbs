@@ -23,18 +23,38 @@
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">
         <a href="/toy/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Toy</button></a>
       {{/each}}
-
     </div>
     <br>
     <div class="col-md-4">
       <h4>Comments by {{userFound.username}} :</h4>
       {{#each userFound.commentUser}}
-        <p>Comment for <b><a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></b>:</p>
-        <p>{{this.content}}</p>
-        <a href="/comment/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Comment</button></a>
+            <br class="my-0" style="height: 20px;" />
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="{{this.idToy.photo}}" alt="avatar" width="60"
+                height="60" />
+              <div>
+                <h6 class="fw-bold mb-1"> <a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></h6>
+                <div class="d-flex align-items-center mb-3">
+                  <p class="mb-0">
+                    {{lookup ../objDates this._id }}
+                  </p>
+                </div>
+                <p class="mb-0">
+                  {{this.content}}
+                </p>
+              </div>
+            </div>
+            <br class="my-0" style="height: 10px;" />
+              <a href="/comment/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Comment</button></a>
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+              <br class="my-0" style="height: 20px;" />
+          <hr class="my-0" style="height: 10px;" />
       {{/each}}
-
     </div>
+
+
    </div>
   </div>
 
