@@ -1,8 +1,8 @@
 <div>
     <h3>Users List</h3>
-    <ul>
+    <ul class="list-group list-group-flush">
     {{#each userList}}
-<li><a href="/user/{{_id}}/detail"><img src="{{avatar}}" alt="{{username}}" width="25px"> {{username}}</a></li>
+<li class="list-group-item"><a href="/user/{{_id}}/detail"><img src="{{avatar}}" alt="{{username}}" width="25px"> {{username}}</a></li>
 
 
     {{#if ../isUserAdmin}}

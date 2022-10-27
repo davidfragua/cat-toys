@@ -4,34 +4,34 @@
      <img src="{{userFound.avatar}}" alt="Avatar" width="50px">  {{userFound.username}}
     </h3>
   
-    
+  
     <div>
       <h4>Toy reserved by {{userFound.username}} :</h4>
       {{#with userFound.toyReserved}}
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">  
         <a href="/toy/removereserve"> 
-        <button>Remove Toy</button>
+        <button class="btn btn-secondary btn-sm">Remove Toy</button>
         </a>
       {{/with}}
     </div>
     <br>
-    <div>
+    <div >
       <h4>Toys offered by {{userFound.username}} :</h4>
       {{#each userFound.toyOffered}}
         <p><a href="/toy/{{this._id}}/detail">{{this.name}}</a> </p>
         <img src="{{this.photo}}" alt="{{this.name}}" width="50px">
-        <a href="/toy/{{this._id}}/edit"><button>Edit Toy</button></a>
+        <a href="/toy/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Toy</button></a>
       {{/each}}
 
     </div>
     <br>
-    <div>
+    <div >
       <h4>Comments by {{userFound.username}} :</h4>
       {{#each userFound.commentUser}}
         <p>Comment for <b><a href="/toy/{{this.idToy._id}}/detail">{{this.idToy.name}}</a></b>:</p>
         <p>{{this.content}}</p>
-        <a href="/comment/{{this._id}}/edit"><button>Edit Comment</button></a>
+        <a href="/comment/{{this._id}}/edit"><button type="button" class="btn btn-primary btn-sm">Edit Comment</button></a>
       {{/each}}
 
     </div>
