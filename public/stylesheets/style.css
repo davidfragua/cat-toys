@@ -11,6 +11,11 @@ a {
 h1 {
   color: 15px;
 }
+h2 {
+  padding-bottom: 3vh;
+  padding-top: 1vh;
+
+}
 
 .navbar{
   display: flex;
@@ -55,3 +60,55 @@ h1 {
   height: auto;
 }
 
+#login {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#btn-login {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vh;
+}
+
+#sign-up {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#btn-sign-up {
+  display: flex;
+  justify-content: center;
+  margin-top: 4vh;
+  margin-bottom: 2vh;
+}
+
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#btn-try-home {
+  margin-top: 4vh;
+}
+
+#edit-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#btn-edit-user {
+  display: flex;
+  justify-content: center;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+}

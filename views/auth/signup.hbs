@@ -1,28 +1,33 @@
-<div>
+<div id="sign-up">
 
-  <h3>Register Form</h3>
+  <h2>Sign Up</h2>
 
   <form action="/auth/signup" method="POST" enctype="multipart/form-data">
-
-    <label for="username">Username:</label>
-    <input type="text" name="username" />
-    <br />
-    <label for="avatar">Avatar:</label>
-    <input type="file" name="avatar" />
-    <br />
-    <label for="email">Email:</label>
-    <input type="email" name="email" />
-    <br />
-    <label for="password">Password:</label>
-    <input type="password" name="password" />
-    <br />
-     <label for="password1">Confirm Password:</label>
-    <input type="password" name="password1" />
-    <br />
-
+<div class="mb-3">
+    <label for="username" class="form-label">Username:</label>
+    <input type="text" name="username" class="form-control" />
+  </div>
+    <div class="mb-3">
+    <label for="avatar" class="form-label">Avatar:</label>
+    <input type="file" name="avatar" class="form-control"/>
+    </div>
+    <div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" name="email" class="form-control"/>
+    </div>
+    <div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input type="password" name="password" class="form-control" />
+    </div>
+    <div class="mb-3">
+     <label for="password1" class="form-label">Confirm Password:</label>
+    <input type="password" name="password1" class="form-control"/>
+    </div>
+  <div id="btn-sign-up">
+    <button type="submit" class="btn btn-primary">Register</button>
+  </div>
     <p style="color: red">{{errorMessage}}</p>
-
-    <button>Register</button>
+  
 
   </form>
 

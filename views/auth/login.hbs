@@ -1,20 +1,21 @@
-<div>
+<div id="login">
 
-  <h3>Log In</h3>
+  <h2>Log In</h2>
 
   <form action="/auth/login" method="POST">
+<div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" name="email" class="form-control" />
+  </div>
+<div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input type="password" name="password" class="form-control" />
+  </div>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" />
-    <br />
-    <label for="password">Password:</label>
-    <input type="password" name="password" />
-    <br />
-
+<div id = "btn-login">
+    <button type="submit" class="btn btn-primary">Log In</button>
+</div>
     <p style="color: red">{{errorMessage}}</p>
-
-    <button>Log In</button>
-
   </form>
 
 </div>

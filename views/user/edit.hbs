@@ -1,26 +1,29 @@
-<div>
+<div id = "edit-user">
 
   <h3>Edit my profile</h3>
 
   <form action="/user/{{activeUser._id}}/edit" method="POST" enctype="multipart/form-data">
+<div class="mb-3">
+    <label for="username" class="form-label">Username:</label>
+    <input type="text" name="username" class="form-control" value="{{activeUser.username}}" />
+   </div>
+<div class="mb-3">
+    <label for="avatar" class="form-label">Avatar</label>
+    <input type="file" name="avatar" class="form-control">
+</div>
+<div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="text" name="email" class="form-control" value="{{activeUser.email}}" />
+</div>
+<div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input type="password" name="password" class="form-control" />
+</div>
 
-    <label for="username">Username:</label>
-    <input type="text" name="username" value="{{activeUser.username}}" />
-    <br />
-    <label for="avatar">Avatar</label>
-    <input type="file" name="avatar">
-    <br />
-    <label for="email">Email:</label>
-    <input type="text" name="email" value="{{activeUser.email}}" />
-    <br />
-    <label for="password">Password:</label>
-    <input type="password" name="password" />
-    <br />
-
-    <p style="color: red">{{errorMessage}}</p>
-
-    <button>Update</button>
-
+<div id="btn-edit-user">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+    <p class="error-message" style="color: red">{{errorMessage}}</p>
   </form>
 
 </div>
