@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const {
   isLoggedIn,
   isAdmin,
-  photoChecker,
 } = require("../middlewares/auth.middleware");
 const router = express.Router();
 const Toy = require("../models/Toy.model");
@@ -31,27 +30,17 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate("commentToy")
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
+    //mensaje de reservado y boton de reserva/quitarReserva
     let reserved = false;
+    let reservedButton = true
     if (req.session.activeUser !==undefined) {
       if (req.session.activeUser.toyReserved !== undefined) {
         reserved = true;
+        reservedButton = false
       }
     }
 
     //para comments, para mostrar la fecha de edicion si ha sido modificado.
-
-    // console.log("COMMETNS DATEE", eachToy.commentToy[0].createdAt);
-
-    // // const currentDate = new Date();
-
-    // const currentDayOfMonth = eachToy.commentToy[0].createdAt.getDate();
-    // const currentMonth = eachToy.commentToy[0].createdAt.getMonth(); // Be careful! January is 0, not 1
-    // const currentYear = eachToy.commentToy[0].createdAt.getFullYear();
-
-    // const dateString =
-    //   currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
-    // console.log("DATESTRIIIING", dateString);
-
     const dateFormat = (date) => {
       let str= ""
       let min=""
@@ -66,9 +55,6 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       }else {
         sec+= date.getSeconds()
       }
-
-
-
       str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
       return str
     }
@@ -77,20 +63,19 @@ router.get("/:idtoy/detail", async (req, res, next) => {
     eachToy.commentToy.forEach((elem) => {
       if (elem.createdAt >= elem.updatedAt) {
         let strDate = dateFormat(elem.createdAt)
-        objDates[elem._id]="Created On "+strDate;
+        objDates[elem._id]="created on "+strDate;
       } else {
         let strDate = dateFormat(elem.updatedAt)
-        objDates[elem._id]="Edited On "+strDate;
+        objDates[elem._id]="edited on "+strDate;
       }
     });
-
-    console.log(objDates);
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
       activeUser: req.session.activeUser,
-      reserved: reserved,
-      objDates : objDates
+      reserved,
+      reservedButton,
+      objDates 
     });
   } catch (error) {
     next(error);
@@ -161,7 +146,7 @@ router.post("/:idtoy/detail", async (req, res, next) => {
 });
 
 //GET "/toy/add"
-router.get("/add", uploader.single("photo"), (req, res, next) => {
+router.get("/add", isLoggedIn, uploader.single("photo"), (req, res, next) => {
   res.render("toy/add.hbs");
 });
 
@@ -225,7 +210,7 @@ router.get("/:idtoy/reserve", isLoggedIn, async (req, res, next) => {
 });
 
 //GET ("/toy/:idtoy/edit")
-router.get("/:idtoy/edit", async (req, res, next) => {
+router.get("/:idtoy/edit", isLoggedIn, async (req, res, next) => {
   const { idtoy } = req.params;
   try {
     const oldToy = await Toy.findById(idtoy);
@@ -265,7 +250,7 @@ router.post(
 );
 
 //GET ("/toy/:idtoy/delete")
-router.get("/:idtoy/delete", async (req, res, next) => {
+router.get("/:idtoy/delete", isLoggedIn, async (req, res, next) => {
   const { idtoy } = req.params;
   try {
     const deletedToy = await Toy.findByIdAndDelete(idtoy);
