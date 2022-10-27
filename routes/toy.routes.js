@@ -31,14 +31,30 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
     //mensaje de reservado y boton de reserva/quitarReserva
+    const actualUserReserve = await User.findById(req.session.activeUser._id).populate("toyReserved")  //.select("toyReserved")
+    // const { _id }= actualUserReserve.toyReserved
+    // const definitiveID = JSON.stringify(_id).split(`"`)
+
     let reserved = false;
     let reservedButton = true
     if (req.session.activeUser !==undefined) {
-      if (req.session.activeUser.toyReserved !== undefined) {
-        reserved = true;
-        reservedButton = false
+      if (actualUserReserve.toyReserved !== null){
+        const { _id }= actualUserReserve.toyReserved
+        const definitiveID = JSON.stringify(_id).split(`"`)
+        reserved= true
+        if(idtoy === definitiveID[1]) {
+          reservedButton = false
+          console.log("FALSE", reservedButton)
+        }
+        else {
+          reservedButton = true
+          console.log("TRUE", reservedButton)
+        }
+      } else {
+        reserved =false
       }
     }
+    //console.log("idtoy", idtoy, "definitiveID", definitiveID[1])
 
     //para comments, para mostrar la fecha de edicion si ha sido modificado.
     const dateFormat = (date) => {

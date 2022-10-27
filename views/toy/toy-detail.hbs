@@ -5,11 +5,15 @@
 <p>{{description}}</p>
 <img src="{{photo}}" alt="{{name}}">
 <p>{{status}}</p>
-{{#if ../reserved}}
-    <p>Ya tienes un juguete reservado, la siguiente reserva substituirá a la anterior</p>
-{{/if}}
 {{#if ../isUserActive}}
-<a href="/toy/{{_id}}/reserve"><button>Reserve it</button></a>
+    {{#if ../reserved}}
+        <p>Ya tienes un juguete reservado, la siguiente reserva substituirá a la anterior</p>
+    {{/if}}
+    {{#if ../reservedButton}}
+        <a href="/toy/{{_id}}/reserve"><button>Reserve it</button></a>
+    {{else}}
+        <a href="/toy/removereserve"><button>Remove Toy</button></a>
+    {{/if}}
 {{/if}}
 
 {{#each commentToy}}
