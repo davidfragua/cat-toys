@@ -13,7 +13,7 @@ cloudinary.config({
   const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-      allowedFormats: ["jpg", "png"],
+      allowedFormats: ["jpg", "png", "jpeg"],
       folder: "cat-toys"
     }
   })
