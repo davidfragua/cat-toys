@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.model.js");
 const { isLoggedIn } = require("../middlewares/auth.middleware.js");
-const uploader = require("../middlewares/cloudinary.js")
+const uploader = require("../middlewares/cloudinary.js");
 
 //GET "/auth/signup" => renderiza el form para recoger los datos del nuevo usuario
 router.get("/signup", (req, res, next) => {
@@ -16,7 +16,6 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
 
   const { username, email, password, password1 } = req.body;
 
-  
   // 1. Validaciones de backend
   // .todos los campos deben estar llenos
   if (username === "" || email === "" || password === "" || password1 === "") {
@@ -26,7 +25,7 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
     return;
   }
 
-  if (password !==  password1 ) {
+  if (password !== password1) {
     res.render("auth/signup.hbs", {
       errorMessage: "Passwords don't match",
     });
@@ -43,7 +42,6 @@ router.post("/signup", uploader.single("avatar"), async (req, res, next) => {
     });
     return;
   }
-  
 
   try {
     // validacion de que el usuario sea unico, no esté actualmente registrado en la DB
@@ -94,7 +92,6 @@ router.get("/login", (req, res, next) => {
 //POST "/auth/login" => recoge a info del form para loggear
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
 
   // 1. validaciones de backend
   if (email === "" || password === "") {
@@ -117,7 +114,6 @@ router.post("/login", async (req, res, next) => {
 
     // 2. verificar la contraseña del usuario (validar)
     const isPasswordValid = await bcrypt.compare(password, foundUser.password);
-    console.log("isPasswordValid", isPasswordValid);
     if (isPasswordValid === false) {
       res.render("auth/login.hbs", {
         errorMessage: "Wrong credentials",
@@ -128,7 +124,6 @@ router.post("/login", async (req, res, next) => {
     // 3. Implementar un sistema de sesions y abrir una sesión para este usuario
 
     req.session.activeUser = foundUser; // ESTA ES LA LINEA CREA CREA LA SESSION/COOKIE
-    console.log(req.session.activeUser);
     // el método es para asegurar que la sesión se ha creado correctamente antes de continuar
     req.session.save(() => {
       // 4. redireccionar a una página privada

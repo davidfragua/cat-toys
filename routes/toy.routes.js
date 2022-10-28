@@ -1,9 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const {
-  isLoggedIn,
-  isAdmin,
-} = require("../middlewares/auth.middleware");
+const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware");
 const router = express.Router();
 const Toy = require("../models/Toy.model");
 const Comment = require("../models/Comment.model");
@@ -34,67 +31,78 @@ router.get("/:idtoy/detail", async (req, res, next) => {
     let actualUserReserve;
     // const { _id }= actualUserReserve.toyReserved
     // const definitiveID = JSON.stringify(_id).split(`"`)
-    
+
     let reserved = false;
-    let reservedButton = true
-    if (req.session.activeUser !==undefined) {
-      if (actualUserReserve !== undefined && actualUserReserve.toyReserved !== null && actualUserReserve.toyReserved !== undefined){
-        actualUserReserve = await User.findById(req.session.activeUser._id).populate("toyReserved")  //.select("toyReserved")
-        const { _id }= actualUserReserve.toyReserved
-        const definitiveID = JSON.stringify(_id).split(`"`)
-        reserved= true
-        if(idtoy === definitiveID[1]) {
-          reservedButton = false
-          console.log("FALSE", reservedButton)
-        }
-        else {
-          reservedButton = true
-          console.log("TRUE", reservedButton)
+    let reservedButton = true;
+    if (req.session.activeUser !== undefined) {
+      if (
+        actualUserReserve !== undefined &&
+        actualUserReserve.toyReserved !== null &&
+        actualUserReserve.toyReserved !== undefined
+      ) {
+        actualUserReserve = await User.findById(
+          req.session.activeUser._id
+        ).populate("toyReserved"); //.select("toyReserved")
+        const { _id } = actualUserReserve.toyReserved;
+        const definitiveID = JSON.stringify(_id).split(`"`);
+        reserved = true;
+        if (idtoy === definitiveID[1]) {
+          reservedButton = false;
+        } else {
+          reservedButton = true;
         }
       } else {
-        reserved =false
+        reserved = false;
       }
     }
-    //console.log("idtoy", idtoy, "definitiveID", definitiveID[1])
 
     //para comments, para mostrar la fecha de edicion si ha sido modificado.
     const dateFormat = (date) => {
-      let str= ""
-      let min=""
-      let sec=""
-      if (date.getMinutes()<10){
-        min+= "0"+date.getMinutes()
+      let str = "";
+      let min = "";
+      let sec = "";
+      if (date.getMinutes() < 10) {
+        min += "0" + date.getMinutes();
       } else {
-        min+= date.getMinutes()
+        min += date.getMinutes();
       }
-      if(date.getSeconds()<10){
-        sec+= "0"+date.getSeconds()
-      }else {
-        sec+= date.getSeconds()
+      if (date.getSeconds() < 10) {
+        sec += "0" + date.getSeconds();
+      } else {
+        sec += date.getSeconds();
       }
-      str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
-      return str
-    }
+      str =
+        date.getDate() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getFullYear() +
+        " " +
+        date.getHours() +
+        ":" +
+        min +
+        ":" +
+        sec;
+      return str;
+    };
 
     let objDates = {};
     eachToy.commentToy.forEach((elem) => {
       if (elem.createdAt >= elem.updatedAt) {
-        let strDate = dateFormat(elem.createdAt)
-        objDates[elem._id]="created on "+strDate;
+        let strDate = dateFormat(elem.createdAt);
+        objDates[elem._id] = "created on " + strDate;
       } else {
-        let strDate = dateFormat(elem.updatedAt)
-        objDates[elem._id]="edited on "+strDate;
+        let strDate = dateFormat(elem.updatedAt);
+        objDates[elem._id] = "edited on " + strDate;
       }
     });
-
-    console.log("ACTIVEUSERRERE", req.session.activeUser)
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
       activeUser: req.session.activeUser,
       reserved,
       reservedButton,
-      objDates 
+      objDates,
     });
   } catch (error) {
     next(error);
@@ -173,14 +181,13 @@ router.get("/add", isLoggedIn, uploader.single("photo"), (req, res, next) => {
 router.post("/add", uploader.single("photo"), async (req, res, next) => {
   const { name, description, status, commentToy } = req.body;
   //validacion de form
-  if(name === "" || description === "") {
+  if (name === "" || description === "") {
     res.render("toy/add.hbs", {
       errorMessage: "Must fill all the inputs",
     });
     return;
   }
   try {
-
     const oneToy = {
       name: name,
       description: description,
@@ -240,7 +247,6 @@ router.get("/:idtoy/edit", isLoggedIn, async (req, res, next) => {
   const { idtoy } = req.params;
   try {
     const oldToy = await Toy.findById(idtoy);
-    console.log("OLTTOYPHOTO", oldToy.photo);
     res.render("toy/edit.hbs", {
       oldToy,
     });
@@ -265,7 +271,6 @@ router.post(
         status: status,
         commentToy: commentToy,
       };
-      console.log("PHOOTO", newToy.photo);
       const updatedToy = await Toy.findByIdAndUpdate(idtoy, newToy);
 
       res.redirect(`/user/profile`);
@@ -298,10 +303,9 @@ router.get("/removereserve", isLoggedIn, async (req, res, next) => {
   }
 });
 
-
 //GET "/toy/removereserve/:idtoy"
 router.get("/removereservetoy/:idtoy", isLoggedIn, async (req, res, next) => {
-  const {idtoy} = req.params
+  const { idtoy } = req.params;
   try {
     const otherUser = await User.findByIdAndUpdate(req.session.activeUser._id, {
       toyReserved: null,

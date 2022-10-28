@@ -4,12 +4,11 @@ const { isLoggedIn, isAdmin } = require("../middlewares/auth.middleware.js");
 const router = express.Router();
 const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
-const uploader = require("../middlewares/cloudinary.js")
+const uploader = require("../middlewares/cloudinary.js");
 
 //GET "/user/profile" => renderiza el area personal del user
 router.get("/profile", isLoggedIn, async (req, res, next) => {
   try {
-    //console.log("ACTICVE USER",req.session.activeUser)
     const userFound = await User.findById(req.session.activeUser._id)
       .populate("toyOffered")
       .populate("toyReserved")
@@ -19,39 +18,50 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
         populate: { path: "idToy", populate: { path: "name" } },
       });
 
-//para comments, para mostrar la fecha de edicion si ha sido modificado.
-const dateFormat = (date) => {
-  let str= ""
-  let min=""
-  let sec=""
-  if (date.getMinutes()<10){
-    min+= "0"+date.getMinutes()
-  } else {
-    min+= date.getMinutes()
-  }
-  if(date.getSeconds()<10){
-    sec+= "0"+date.getSeconds()
-  }else {
-    sec+= date.getSeconds()
-  }
-  str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
-  return str
-}
+    //para comments, para mostrar la fecha de edicion si ha sido modificado.
+    const dateFormat = (date) => {
+      let str = "";
+      let min = "";
+      let sec = "";
+      if (date.getMinutes() < 10) {
+        min += "0" + date.getMinutes();
+      } else {
+        min += date.getMinutes();
+      }
+      if (date.getSeconds() < 10) {
+        sec += "0" + date.getSeconds();
+      } else {
+        sec += date.getSeconds();
+      }
+      str =
+        date.getDate() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getFullYear() +
+        " " +
+        date.getHours() +
+        ":" +
+        min +
+        ":" +
+        sec;
+      return str;
+    };
 
-let objDates = {};
-userFound.commentUser.forEach((elem) => {
-  if (elem.createdAt >= elem.updatedAt) {
-    let strDate = dateFormat(elem.createdAt)
-    objDates[elem._id]="created on "+strDate;
-  } else {
-    let strDate = dateFormat(elem.updatedAt)
-    objDates[elem._id]="edited on "+strDate;
-  }
-});
+    let objDates = {};
+    userFound.commentUser.forEach((elem) => {
+      if (elem.createdAt >= elem.updatedAt) {
+        let strDate = dateFormat(elem.createdAt);
+        objDates[elem._id] = "created on " + strDate;
+      } else {
+        let strDate = dateFormat(elem.updatedAt);
+        objDates[elem._id] = "edited on " + strDate;
+      }
+    });
 
     res.render("user/profile.hbs", {
       userFound,
-      objDates
+      objDates,
     });
   } catch (error) {
     next(error);
@@ -60,8 +70,6 @@ userFound.commentUser.forEach((elem) => {
 
 //GET "/user/list" => renderiza una lista de todos los user
 router.get("/list", isLoggedIn, async (req, res, next) => {
-  //TODO imagenes usuario
-  console.log("ISADMIN!!!!", res.locals.isUserAdmin);
   try {
     const userList = await User.find();
     res.render("user/list.hbs", {
@@ -76,44 +84,57 @@ router.get("/list", isLoggedIn, async (req, res, next) => {
 router.get("/:userid/detail", isLoggedIn, async (req, res, next) => {
   const { userid } = req.params;
   try {
-    const userDetail = await User.findById(userid).populate("toyOffered").populate("commentUser").populate({
-      path: "commentUser",
-      populate: {path: "idToy", populate: {path:"name"}}
+    const userDetail = await User.findById(userid)
+      .populate("toyOffered")
+      .populate("commentUser")
+      .populate({
+        path: "commentUser",
+        populate: { path: "idToy", populate: { path: "name" } },
+      });
+    //para comments, para mostrar la fecha de edicion si ha sido modificado.
+    const dateFormat = (date) => {
+      let str = "";
+      let min = "";
+      let sec = "";
+      if (date.getMinutes() < 10) {
+        min += "0" + date.getMinutes();
+      } else {
+        min += date.getMinutes();
+      }
+      if (date.getSeconds() < 10) {
+        sec += "0" + date.getSeconds();
+      } else {
+        sec += date.getSeconds();
+      }
+      str =
+        date.getDate() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getFullYear() +
+        " " +
+        date.getHours() +
+        ":" +
+        min +
+        ":" +
+        sec;
+      return str;
+    };
+
+    let objDates = {};
+    userDetail.commentUser.forEach((elem) => {
+      if (elem.createdAt >= elem.updatedAt) {
+        let strDate = dateFormat(elem.createdAt);
+        objDates[elem._id] = "created on " + strDate;
+      } else {
+        let strDate = dateFormat(elem.updatedAt);
+        objDates[elem._id] = "edited on " + strDate;
+      }
     });
-  //para comments, para mostrar la fecha de edicion si ha sido modificado.
-const dateFormat = (date) => {
-  let str= ""
-  let min=""
-  let sec=""
-  if (date.getMinutes()<10){
-    min+= "0"+date.getMinutes()
-  } else {
-    min+= date.getMinutes()
-  }
-  if(date.getSeconds()<10){
-    sec+= "0"+date.getSeconds()
-  }else {
-    sec+= date.getSeconds()
-  }
-  str = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + min + ":" + sec
-  return str
-}
-
-let objDates = {};
-userDetail.commentUser.forEach((elem) => {
-  if (elem.createdAt >= elem.updatedAt) {
-    let strDate = dateFormat(elem.createdAt)
-    objDates[elem._id]="created on "+strDate;
-  } else {
-    let strDate = dateFormat(elem.updatedAt)
-    objDates[elem._id]="edited on "+strDate;
-  }
-});
-
 
     res.render("user/detail.hbs", {
       userDetail: userDetail,
-      objDates
+      objDates,
     });
   } catch (error) {
     next(error);
@@ -134,56 +155,59 @@ router.get("/:userid/edit", isLoggedIn, async (req, res, next) => {
 });
 
 //POST ("/user/:userid/edit")
-router.post("/:userid/edit", isLoggedIn, uploader.single("avatar"), async (req, res, next) => {
-  const { userid } = req.params;
+router.post(
+  "/:userid/edit",
+  isLoggedIn,
+  uploader.single("avatar"),
+  async (req, res, next) => {
+    const { userid } = req.params;
 
-  try {
-    const oldUser = await User.findById(userid);
+    try {
+      const oldUser = await User.findById(userid);
 
-    // 1. Validaciones de backend
-    // .todos los campos deben estar llenos
-    if (req.body.email === "" || req.body.password === "") {
-      res.render("user/edit.hbs", {
-        errorMessage: "Debes llenar todos los campos",
-        activeUser: req.session.activeUser,
-      });
-      return;
+      // 1. Validaciones de backend
+      // .todos los campos deben estar llenos
+      if (req.body.email === "" || req.body.password === "") {
+        res.render("user/edit.hbs", {
+          errorMessage: "Debes llenar todos los campos",
+          activeUser: req.session.activeUser,
+        });
+        return;
+      }
+
+      // validar la fuerza de la contraseña
+      // const passwordRegex = new RegExp("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm")
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+      if (passwordRegex.test(req.body.password) === false) {
+        res.render("user/edit.hbs", {
+          errorMessage:
+            "La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número",
+          activeUser: req.session.activeUser,
+        });
+        return;
+      }
+
+      const salt = await bcrypt.genSalt(12);
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+      const updateUser = {
+        username: req.body.username,
+        avatar: req.file?.path,
+        email: req.body.email,
+        password: hashPassword,
+        toyOffered: oldUser.toyOffered,
+        toyReserved: oldUser.toyReserved,
+        commentUser: oldUser.commentUser,
+      };
+
+      const editUser = await User.findByIdAndUpdate(userid, updateUser);
+      res.redirect("/user/profile");
+    } catch (error) {
+      next(error);
     }
-
-    // validar la fuerza de la contraseña
-    // const passwordRegex = new RegExp("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm")
-    const passwordRegex =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
-    if (passwordRegex.test(req.body.password) === false) {
-      res.render("user/edit.hbs", {
-        errorMessage:
-          "La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número",
-        activeUser: req.session.activeUser,
-      });
-      return;
-    }
-
-    const salt = await bcrypt.genSalt(12);
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
-
-    
-
-    const updateUser = {
-      username: req.body.username,
-      avatar: req.file?.path,
-      email: req.body.email,
-      password: hashPassword,
-      toyOffered: oldUser.toyOffered,
-      toyReserved: oldUser.toyReserved,
-      commentUser: oldUser.commentUser,
-    };
-
-    const editUser = await User.findByIdAndUpdate(userid, updateUser);
-    res.redirect("/user/profile");
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // GET ("user/:userid/delete")
 router.get("/:userid/delete", isAdmin, async (req, res, next) => {

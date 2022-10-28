@@ -43,7 +43,7 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: "https://res.cloudinary.com/dgsjejaed/image/upload/v1666701992/cat-toys/q3fi1deeyjznzy6athzy.png"
+      default: "https://res.cloudinary.com/dgsjejaed/image/upload/v1666950356/cat-toys/avatar-user_d8wkak.png"
     },
   },
   {
