@@ -16,9 +16,9 @@
 <br>
 {{#if ../isUserActive}}
     {{#if ../reservedButton}}
-    {{#if ../reserved}}
+      {{#if ../reserved}}
         <p style="color: red">You already have a toy booked, booking again will replace your current booking</p>
-    {{/if}}
+      {{/if}}
         <a href="/toy/{{_id}}/reserve"><button class="btn btn-primary btn-sm">Reserve it</button></a>
     {{else}}
         <a href="/toy/removereservetoy/{{_id}}"><button class="btn btn-secondary btn-sm">Remove Toy</button></a>
