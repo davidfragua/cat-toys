@@ -22,7 +22,7 @@ require("./config")(app);
 const capitalize = require("./utils/capitalize");
 const projectName = "cat-toys";
 
-app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
+app.locals.appTitle = `${capitalize(projectName)}`;
 
 // aqui ejecutaremos el middleware de variables locales para CADA ruta que intente acceder el cliente
 app.use((req, res, next) => {

@@ -29,7 +29,7 @@ h2,h3 {
   padding-right: 10vw;
   padding-top: 2vh;
   padding-left: 8vw;
-
+  z-index: 99;
 
 }
 
