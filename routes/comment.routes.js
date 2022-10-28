@@ -49,4 +49,15 @@ router.get("/:commentId/:toyId/delete", async (req, res, next) => {
   }
 });
 
+// GET ("/comment/:comentid/:userid/deleteuser") => borrar comentario
+router.get("/:commentId/:iduser/deleteuser", async (req, res, next) => {
+  const { commentId, iduser } = req.params;
+  try {
+    const oneComment = await Comment.findByIdAndDelete(commentId);
+    res.redirect(`/user/profile`);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
