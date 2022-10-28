@@ -38,7 +38,7 @@ router.get("/:idtoy/detail", async (req, res, next) => {
     let reserved = false;
     let reservedButton = true
     if (req.session.activeUser !==undefined) {
-      if (actualUserReserve.toyReserved !== null && actualUserReserve.toyReserved !== undefined){
+      if (actualUserReserve !== undefined && actualUserReserve.toyReserved !== null && actualUserReserve.toyReserved !== undefined){
         actualUserReserve = await User.findById(req.session.activeUser._id).populate("toyReserved")  //.select("toyReserved")
         const { _id }= actualUserReserve.toyReserved
         const definitiveID = JSON.stringify(_id).split(`"`)
