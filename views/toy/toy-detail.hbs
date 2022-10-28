@@ -54,6 +54,11 @@
               </div>
             </div>
             <br class="my-0" />
+            {{#if ../../isUserAdmin}}
+            <a href="/comment/{{this._id}}/{{idToy._id}}/delete"><button type="button" class="btn btn-secondary btn-sm">Delete Comment</button></a>
+              {{/if}}
+          <br class="my-0" />
+            <br class="my-0" />
           <hr class="my-0" style="height: 10px;" />
             {{/each}}
           </div>
