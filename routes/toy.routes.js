@@ -31,14 +31,15 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       .populate({ path: "commentToy", populate: { path: "idUser" } });
 
     //mensaje de reservado y boton de reserva/quitarReserva
-    const actualUserReserve = await User.findById(req.session.activeUser._id).populate("toyReserved")  //.select("toyReserved")
+    let actualUserReserve;
     // const { _id }= actualUserReserve.toyReserved
     // const definitiveID = JSON.stringify(_id).split(`"`)
-
+    
     let reserved = false;
     let reservedButton = true
     if (req.session.activeUser !==undefined) {
-      if (actualUserReserve.toyReserved !== null){
+      if (actualUserReserve.toyReserved !== null && actualUserReserve.toyReserved !== undefined){
+        actualUserReserve = await User.findById(req.session.activeUser._id).populate("toyReserved")  //.select("toyReserved")
         const { _id }= actualUserReserve.toyReserved
         const definitiveID = JSON.stringify(_id).split(`"`)
         reserved= true
