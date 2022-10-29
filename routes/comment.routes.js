@@ -2,6 +2,7 @@ const express = require("express");
 const Toy = require("../models/Toy.model");
 const router = express.Router();
 const Comment = require("../models/Comment.model");
+const createdEdited = require("../utils/createdEdited.js")
 
 //GET ("/comment/:idcomment/edit")
 router.get("/:idcomment/edit", async (req, res, next) => {

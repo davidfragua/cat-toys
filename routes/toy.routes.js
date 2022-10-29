@@ -6,6 +6,7 @@ const Toy = require("../models/Toy.model");
 const Comment = require("../models/Comment.model");
 const User = require("../models/User.model");
 const uploader = require("../middlewares/cloudinary.js");
+const createdEdited = require("../utils/createdEdited.js")
 
 //GET "/toy/list" => renderiza una lista de todos los toy
 router.get("/list", async (req, res, next) => {
@@ -37,7 +38,7 @@ router.get("/:idtoy/detail", async (req, res, next) => {
     if (req.session.activeUser !== undefined) {
       actualUserReserve = await User.findById(
         req.session.activeUser._id
-      ).populate("toyReserved"); //.select("toyReserved")
+      ).populate("toyReserved"); 
       if (
         actualUserReserve !== undefined &&
         actualUserReserve.toyReserved !== null &&
@@ -56,46 +57,8 @@ router.get("/:idtoy/detail", async (req, res, next) => {
       }
     }
 
-    //para comments, para mostrar la fecha de edicion si ha sido modificado.
-    const dateFormat = (date) => {
-      let str = "";
-      let min = "";
-      let sec = "";
-      if (date.getMinutes() < 10) {
-        min += "0" + date.getMinutes();
-      } else {
-        min += date.getMinutes();
-      }
-      if (date.getSeconds() < 10) {
-        sec += "0" + date.getSeconds();
-      } else {
-        sec += date.getSeconds();
-      }
-      str =
-        date.getDate() +
-        "-" +
-        (date.getMonth() + 1) +
-        "-" +
-        date.getFullYear() +
-        " " +
-        date.getHours() +
-        ":" +
-        min +
-        ":" +
-        sec;
-      return str;
-    };
-
-    let objDates = {};
-    eachToy.commentToy.forEach((elem) => {
-      if (elem.createdAt >= elem.updatedAt) {
-        let strDate = dateFormat(elem.createdAt);
-        objDates[elem._id] = "created on " + strDate;
-      } else {
-        let strDate = dateFormat(elem.updatedAt);
-        objDates[elem._id] = "edited on " + strDate;
-      }
-    });
+    //para comments, para mostrar la fecha de edicion si ha sido modificado
+    let objDates = createdEdited(eachToy.commentToy);
 
     res.render("toy/toy-detail.hbs", {
       eachToy,
